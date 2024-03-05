@@ -8,7 +8,7 @@ website:
     left:
       - href: index.html
         text: Home
-      - text: Workshop
+      - text: Workshop Materials
         menu:
         - text: "Basics of R Programming Language"
           href: vignettes/1_Introduction.html
