@@ -1,0 +1,2156 @@
+---
+title: "Step 3: Transforming Data"
+---
+
+The `dplyr` package (part of the tidyverse), aims to simplify the process of manipulating and transforming data in a straightforward and user-friendly manner. This is the second step in the tidyverse workflow.
+
+![](images/life-cycle-3.png){fig-align="center"}
+
+A central principle of tidyverse packages, is the emphasis on minimizing the number of keystrokes and characters needed to attain desired results. In `dplyr`, the use of quotation marks for column names in data frames is often unnecessary. Another noteworthy aspect is that both the input to and output from all functions are in the form of data frames.
+
+`dplyr` package offers a set of key functions, referred to as 'verbs', which can be combined to achieve specific and targeted outcomes. Users familiar with functions in Microsoft Excel may recognize similarities in the functionality provided by `dplyr`.
+
+Before we delve into these functions in detail, let's first explore filtering or *subsetting* data frames using base R functions.
+
+## Subsetting Data Frames
+
+A frequently encountered task in data manipulation is filtering or *subsetting* data to a more focused and potentially relevant subset of values. Data frames (or tibbles) can be subset using base R functions.
+
+Let's start by reading the cms_hospital_patient_satisfaction_2016_sampled.csv into a data frame using the `read_csv()` function in `readr` packgae:
+
+```{r}
+#| warning: false
+library(readr)
+# here the first argument is a path
+cms_data <- read_csv("data/patient_satisfaction/cms_hospital_patient_satisfaction_2016_sampled.csv")
+# convert column names to R standard
+library(janitor) # remember to install janitor: install.packages("janitor")
+cms_data <- cms_data |> clean_names()
+```
+
+### Subset by position
+
+Here we use the `[row, col]` syntax to subset data frames.
+
+1.  To display a single value:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# display the value in 4th row and 2nd column
+cms_data[4, 2]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# display the value in 4th row and 2nd column
+cms_data[4, 2]
+```
+
+```{=html}
+</details>
+```
+
+2.  To display a single row: Here, the column value is omitted, thereby retrieving the entire column.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# display the 4th row
+cms_data[4,]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# display the 4th row
+cms_data[4,]
+```
+
+```{=html}
+</details>
+```
+
+3.  To display a single column: (Note: columns can be given by name as well) Here, the row value is omitted, thereby retrieving the entire column.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# display the 3rd column
+cms_data[, 3] # is same as cms_data[3]
+# display the 3rd column (or County column)
+cms_data[, "county"] # is same as cms_data["County"]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# display the 3rd column
+cms_data[, 3] # is same as cms_data[3]
+# display the 3rd column (or County column)
+cms_data[, "county"] # is same as cms_data["County"]
+```
+
+```{=html}
+</details>
+```
+
+4.  To display a range of rows:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# using a vector of indexes
+cms_data[c(3, 5, 1), ]
+# subsetting
+cms_data[2:4,]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# using a vector of indexes
+cms_data[c(3, 5, 1), ]
+# subsetting
+cms_data[2:4,]
+```
+
+```{=html}
+</details>
+```
+
+5.  To display a range of columns:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# using a vector of indexes
+cms_data[, c(1, 3, 6), ]
+# subsetting
+cms_data[, 4:6]
+# using a vector of column names
+cms_data[, c("hospital_type", "overall_rating")]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# using a vector of indexes
+cms_data[, c(1, 3, 6), ]
+# subsetting
+cms_data[, 4:6]
+# using a vector of column names
+cms_data[, c("hospital_type", "overall_rating")]
+```
+
+```{=html}
+</details>
+```
+
+6.  To display multiple rows and columns:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data[2:6, c("hospital_type", "no_of_surveys", "response_rate")]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data[2:6, c("hospital_type", "no_of_surveys", "response_rate")]
+```
+
+```{=html}
+</details>
+```
+
+7.  To exclude a column (use - size):
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# display the data frame without Star_rating column
+cms_data[-5]
+# display the data frame, include only the hospital information and location
+cms_data[c(-5, -6, -7, -8)] # or cms_data[c(1, 2, 3, 4)]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# display the data frame without Star_rating column
+cms_data[-5]
+# display the data frame, include only the hospital information and location
+cms_data[c(-5, -6, -7, -8)] # or cms_data[c(1, 2, 3, 4)]
+```
+
+```{=html}
+</details>
+```
+
+### Subset by condition
+
+Apart from subsetting a vector based on the position of values, we can also ask questions about the set of values to R, and it will respond with TRUE or FALSE answers. This is often done using logical expressions to filter the data.
+
+1.  Which cells contain the value "LOS ANGELES"?
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data == "LOS ANGELES"
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data == "LOS ANGELES"
+```
+
+```{=html}
+</details>
+```
+
+R returns `TRUE` for values that satisfy the *condition*, and `FALSE` for those that don't.
+
+How many cells contain the word "LOS ANGELES"?
+
+We can use the `sum()` function to compute the number of occurrences of "LOS ANGELES" in the data frame as it treats `TRUE` as 1 and `FALSE` as 0.
+
+```{r}
+#| eval: false
+sum(cms_data == "LOS ANGELES")
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+sum(cms_data == "LOS ANGELES")
+```
+
+```{=html}
+</details>
+```
+
+2.  Which cells contain the value 3?
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data == 3
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data == 3
+```
+
+```{=html}
+</details>
+```
+
+We will use the **comparison operators** (see [Section: Comparison Operators and Expressions](1_Introduction.qmd#sec-comparison)) and **logical operators** (see [Section: Logical Operators and Expressions](1_Introduction.qmd#sec-logical)) we explored in the subsequent sections.
+
+3.  Find all the facilities with a star rating above 3.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+sr_above_3 <- cms_data$star_rating > 3
+cms_data[sr_above_3, ]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+sr_above_3 <- cms_data$star_rating > 3
+cms_data[sr_above_3, ]
+```
+
+```{=html}
+</details>
+```
+
+4.  Find all the facility names with a star rating above 2.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data[sr_above_3, 2]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data[sr_above_3, 2]
+```
+
+```{=html}
+</details>
+```
+
+5.  Find all the facilities with an overall rating of at least 3 and the response rate is above 30%.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# overall rating of at least 3
+orate_aleast_3 <- cms_data["overall_rating"] >= 3
+# response rate above 30\%
+rrate_above_30 <- cms_data[7] > 30
+# both conditions has to satisfy. hence and (&) operator
+cms_data[(orate_aleast_3 & rrate_above_30), ]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# overall rating of at least 3
+orate_aleast_3 <- cms_data["overall_rating"] >= 3
+# response rate above 30\%
+rrate_above_30 <- cms_data[7] > 30
+# both conditions has to satisfy. hence and (&) operator
+cms_data[(orate_aleast_3 & rrate_above_30), ]
+```
+
+```{=html}
+</details>
+```
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# the above 3 commands can be combined into a single-line command
+cms_data[(cms_data["overall_rating"] >= 3) & (cms_data[7] > 30), ]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# the above 3 commands can be combined into a single-line command
+cms_data[(cms_data["overall_rating"] >= 3) & (cms_data[7] > 30), ]
+```
+
+```{=html}
+</details>
+```
+
+Operators in R have a specific precedence, and they are executed either from left $\rightarrow$ right or right $\rightarrow$ left. This can impact the expected result if you are not mindful of operator precedence. It is advisable to use parentheses to explicitly define the order of operations since parentheses have the highest precedence. Refer to [this image](http://mercury.webster.edu/aleshunas/R_learning_infrastructure/images/Operator%20presence%20in%20R.png) for a operator precedence table.
+
+For example: 5 + 3 \* 2 is not the same as (5 + 3) \* 2. The multiplication operation takes precedence over addition, potentially leading to unexpected results. Using parentheses ensures that the addition operation is performed first, providing the desired outcome.
+
+6.  Find the county of hospitals with any rating greater than or equal to 3.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# there are two ratings:
+# 1. star_rating >= 3
+srate_3 <- cms_data$star_rating >= 3
+# 2. overall_rating >= 3
+orate_3 <- cms_data["overall_rating"] >= 3
+# any means at least one has to be >= 3 -> or operator
+cms_data[srate_3 | orate_3, ]
+# we only needs the county names
+cms_data[srate_3 | orate_3, "county"]
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# there are two ratings:
+# 1. star_rating >= 3
+srate_3 <- cms_data$star_rating >= 3
+# 2. overall_rating >= 3
+orate_3 <- cms_data["overall_rating"] >= 3
+# any means at least one has to be >= 3 -> or operator
+cms_data[srate_3 | orate_3, ]
+# we only needs the county names
+cms_data[srate_3 | orate_3, "county"]
+```
+
+```{=html}
+</details>
+```
+
+7.  How many hospitals are categorized as Acute Care Hospital?
+
+```{r}
+#| eval: false
+# all the hospitals categorized as Acute Care Hospitals 
+hosp_acute <- cms_data$hospital_type == "Acute Care Hospital"
+# summing the vector of TRUE (1) and FALSE (0) values 
+sum(hosp_acute)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+# all the hospitals categorized as Acute Care Hospitals 
+hosp_acute <- cms_data$hospital_type == "Acute Care Hospital"
+# summing the vector of TRUE (1) and FALSE (0) values 
+sum(hosp_acute)
+```
+
+```{=html}
+</details>
+```
+
+8.  Find the summary statistics number of surveys conducted at Critical Access Hospital.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+# all the hospitals categorized as Critical Access Hospitals
+hosp_crit <- cms_data$hospital_type == "Critical Access Hospital"
+# number of surveys conducted in Critical Access Hospitals
+nsurv_crit <- cms_data[hosp_crit, "no_of_surveys"]
+# summary statistics of the number of surveys
+summary(nsurv_crit)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+# all the hospitals categorized as Critical Access Hospitals
+hosp_crit <- cms_data$hospital_type == "Critical Access Hospital"
+# number of surveys conducted in Critical Access Hospitals
+nsurv_crit <- cms_data[hosp_crit, "no_of_surveys"]
+# summary statistics of the number of surveys
+summary(nsurv_crit)
+```
+
+```{=html}
+</details>
+```
+
+This approach can be somewhat cumbersome. It requires repeated referencing of the data frame name, leading to a multiple use of punctuation that needs careful management. In the following section, we will leverage the `dplyr`package and its functions to craft more concise code, and efficient data manipulations.
+
+## Data manipulation with `dplyr' functions 
+
+You'll primarily use five key `dplyr` functions for data manipulations:
+
+1.  **`filter()`:** pick observations based on their values.
+2.  **`select()`:** pick variables by their names.
+3.  **`mutate()`:** create new variables using functions applied to existing variables.
+4.  **`summarise()`:** collapse multiple values into a single summary.
+6.  **`group_by()`:** group the rows based on specified criteria.
+7.  **`arrange()`:** reorder the rows based on specified criteria.
+
+If you've already installed the tidyverse package (if not, you can do so by running the command: `install.packages("tidyverse")`), let's proceed to load it into our R session first:
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+### `filter()`
+
+The `filter()` function takes logical expressions and returns the rows for which all are `TRUE`.
+
+![](http://ohi-science.org/data-science-training/img/rstudio-cheatsheet-filter.png)
+
+**Example 1:** Filter the cms_data data frame to find all the facilities with an overall_rating of 3.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data |> filter(overall_rating == 3)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> filter(overall_rating == 3)
+```
+
+```{=html}
+</details>
+```
+
+Here we are *sending* the cms_data data frame into the function `filter()` which tests each value in overall_rating column for the value 3 and returns the rows where this condition is TRUE.
+
+You can check the dimension (number of rows and number of columns) of the resulting data frame by sending into the `dim()` function as follows:
+
+```{r}
+#| eval: false
+cms_data |> filter(overall_rating == 3) |> dim()
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+cms_data |> filter(overall_rating == 3) |> dim()
+```
+
+```{=html}
+</details>
+```
+
+**Example 2:** Find all the facilities categorized as "Acute Care Hospital". Here we filter on character data.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data |> filter(hospital_type == "Acute Care Hospital")
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> filter(hospital_type == "Acute Care Hospital")
+```
+
+```{=html}
+</details>
+```
+
+We can use logical operators introduced before to combine multiple conditions as follows.
+
+**Example 3:** Find all the facilities categorized as "Acute Care Hospital" and has a overall rating of above 3.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data |> filter(hospital_type == "Acute Care Hospital" & overall_rating > 3)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> filter(hospital_type == "Acute Care Hospital" & overall_rating > 3)
+```
+
+```{=html}
+</details>
+```
+
+**Example 4:** Find the facilities with any rating greater than or equal to 3.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data |> filter(star_rating >= 3 | overall_rating >= 3)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> filter(star_rating >= 3 | overall_rating >= 3)
+```
+
+```{=html}
+</details>
+```
+
+**Example 5:** Find the facilitites with any rating greater than or equal to 3 and the response rate is above 30.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data |> filter(star_rating >= 3 | overall_rating >= 3 & response_rate > 30)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> filter(star_rating >= 3 | overall_rating >= 3 & response_rate > 30)
+```
+
+```{=html}
+</details>
+```
+
+The output of the above command is incorrect. Recall R operator precedence where & operator precedes \| operator. Therefore, the command `overall_rating >= 3 & response_rate > 30` is evaluated first. This can be verified by adding brackets around this command as follows: To fix the issue add brackets as follows:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data |> filter(star_rating >= 3 | (overall_rating >= 3 & response_rate > 30))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> filter(star_rating >= 3 | (overall_rating >= 3 & response_rate > 30))
+```
+
+```{=html}
+</details>
+```
+
+To fix the issue add brackets as follows:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data |> filter((star_rating >= 3 | overall_rating >= 3) & response_rate > 30)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> filter((star_rating >= 3 | overall_rating >= 3) & response_rate > 30)
+```
+
+```{=html}
+</details>
+```
+
+This results in the correct output.
+
+#### `%in%` helper
+
+The `%in%` function is used to determine whether elements of one vector are present in another vector. It returns a logical vector indicating whether each element of the first vector is found in the second vector.
+
+When we want to filter a subset of rows that may contain multiple different values, it's more efficient to provide a vector of the values of interest instead of combining multiple OR commands.
+
+**Example 6:** Retrieve a subset of facilities that have an odd number of overall rating.
+
+```{r}
+#| eval: false
+cms_data |> filter(overall_rating %in% c(1, 3, 5))
+```
+
+```{=html}
+<details>
+  <summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> filter(overall_rating %in% c(1, 3, 5))
+```
+
+```{=html}
+</details>
+```
+
+#### `str_detect` function 
+
+The `str_detect()` function is part of the `stringr` package and is used for pattern matching within strings. It allows you to search for a specific pattern or regular expression (discussed later) within a character vector or string.
+
+**Example 1:** Find all the facilities that contains GENERAL in their name from the cms_data data frame.
+
+```{r}
+#| eval: false
+cms_data |> filter(
+  str_detect(facility_name, 'GENERAL')
+  )
+```
+
+```{=html}
+<details>
+  <summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> filter(
+  str_detect(facility_name, 'GENERAL')
+  )
+```
+
+```{=html}
+</details>
+```
+
+### `select()`
+
+The `select()` function returns a subset of the variables or columns. 
+
+![](http://ohi-science.org/data-science-training/img/rstudio-cheatsheet-select.png){fig-align="center"}
+
+This function can accept column names (even without quotation marks) or the column position number starting from the left. Unlike in base R (we explore before), commands within the brackets in `select()` do not need to be concatenated using `c()`.
+
+**Example 1:** Extract the facility name, hospital type and overall rating columns from cms_data data frame.
+
+```{r}
+#| eval: false
+cms_data |> select(facility_name, hospital_type, overall_rating)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(facility_name, hospital_type, overall_rating)
+```
+
+```{=html}
+</details>
+```
+
+Using column positions:
+
+```{r}
+#| eval: false
+cms_data |> select(2, 4, 8)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(2, 4, 8)
+```
+
+```{=html}
+</details>
+```
+
+We can use the '-' symbol to extract all columns except for specific ones:
+
+```{r}
+#| eval: false
+cms_data |> dplyr::select(-id, -county_name, -star_rating, -no_of_surveys, -response_rate)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(-id, -star_rating, -no_of_surveys, -response_rate, -county)
+```
+
+```{=html}
+</details>
+```
+
+Or use a combination of column names and positions:
+
+```{r}
+#| eval: false
+cms_data |> select(2, 4, overall_rating)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(2, 4, overall_rating)
+```
+
+```{=html}
+</details>
+```
+
+#### Useful helper functions
+
+The select helper functions (check `?select_helpers`) are a set of convenience functions provided by the `dplyr` package. These functions offer shortcuts for selecting columns based on specific criteria or patterns, making it easier to work with data frames.
+
+Some commonly used select helper functions include:
+
+1. **`starts_with()`:** selects columns that start with a specified prefix.
+
+```{r}
+#| eval: false
+cms_data |> select(starts_with('s'))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(starts_with('s'))
+```
+
+```{=html}
+</details>
+```
+
+2. **`ends_with()`:** selects columns that end with a specified suffix.
+
+```{r}
+#| eval: false
+cms_data |> select(ends_with('g'))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(ends_with('g'))
+```
+
+```{=html}
+</details>
+```
+
+3. **`contains()`:** selects columns that contain a specified substring.
+
+```{r}
+#| eval: false
+cms_data |> select(contains('name'))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(contains('name'))
+```
+
+```{=html}
+</details>
+```
+
+
+```{r}
+#| eval: false
+cms_data |> select(contains('f'))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(contains('f'))
+```
+
+```{=html}
+</details>
+```
+
+4. **`matches()`:** selects columns that match a specified regular expression pattern.
+
+```{r}
+#| eval: false
+cms_data |> select(
+  matches('[a-z]_[a-z]{4}$')
+  )
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(matches('[a-z]_[a-z]{4}$'))
+```
+
+```{=html}
+</details>
+```
+
+Here, the regular expression `[a-z]_[a-z]{4}$` can be broken down into smaller chunks for better understanding:
+
+- `[a-z]` matches a set of lowercase characters from 'a' to 'z'.
+- `_` matches an underscore.
+- `[a-z]{4}` matches any four lowercase characters from 'a' to 'z'.
+
+Putting this together, the expression selects column names that have four characters after an underscore. Thus, it should match column names: facility_name, county_name, hospital_type, and response_rate.
+
+If you're unfamiliar with regular expressions, you can skip this section for now. However, interested readers can find many online resources to learn about regular expressions. One of my favorite online tools for building and testing regular expressions is [https://regexr.com](https://regexr.com). You can use this tool to test the correctness of a regular expression.
+
+5. **`num_range()`:** selects columns based on a numeric range.
+
+Let's use the count data frame for this example. First read the csv file: GSE60450_normalized_data.csv.
+
+```{r}
+#| eval: false
+counts <- read_csv("data/GSE60450_normalized_data.csv")
+colnames(counts)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+counts <- read_csv("data/GSE60450_normalized_data.csv")
+colnames(counts)
+```
+
+```{=html}
+</details>
+```
+
+To select the samples from GSM1480297 to GSM1480300:
+
+```{r}
+#| eval: false
+counts |> select(
+  num_range(prefix = "GSM1480", 297:300)
+  )
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+counts |> select(num_range(prefix = "GSM1480", range = 297:300))
+```
+
+```{=html}
+</details>
+```
+
+6. **`all_of()`:** selects columns specified by character vector.
+
+```{r}
+#| error: true
+cms_data |> select(
+  all_of(c("star_rating", "no_of_surveys", "response_rate", "no_column_by_this_name"))
+  )
+```
+
+When using `all_of()`, all the names provided by the vector must be present in the data frame. Otherwise, it will result in an error, as shown above. 
+
+```{r}
+#| eval: false
+cms_data |> select(
+  all_of(c("star_rating", "no_of_surveys", "response_rate"))
+  )
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(
+  all_of(c("star_rating", "no_of_surveys", "response_rate"))
+  )
+```
+
+```{=html}
+</details>
+```
+
+7. **`any_of()`:** selects columns specified by character vector, allowing any of them to be present.
+
+```{r}
+#| eval: false
+cms_data |> select(
+  any_of(c("star_rating", "no_of_surveys", "response_rate", "no_column_by_this_name"))
+  )
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(
+  any_of(c("star_rating", "no_of_surveys", "response_rate", "no_column_by_this_name"))
+  )
+```
+
+```{=html}
+</details>
+```
+
+8. **`everything()`:** Selects all columns.
+
+This function returns all column names that have not been specified. It is often used when reordering all columns in a dataframe:
+
+```{r}
+#| eval: false
+cms_data |> select(5, 8, 2, everything())
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> select(5, 8, 2, everything())
+```
+
+```{=html}
+</details>
+```
+
+Here the dimensions of the dataframe is not changed, merely the column order.
+
+::: {callout-tip}
+You can combine multiple helper functions to create more complex selection criteria. Additionally, you can use the '-' symbol in front of the helper function to exclude the matched columns.
+:::
+
+For example try the following examples:
+```{r}
+#| eval: false
+cms_data |> select(starts_with('i'), contains('rating'))
+cms_data |> select(ends_with("type"), everything(), -1, -3)
+```
+
+### `mutate()`
+
+The `mutate()` function adds new columns of data, thus ‘mutating’ the contents and dimensions of the input data frame.
+
+![](http://ohi-science.org/data-science-training/img/rstudio-cheatsheet-mutate.png)
+
+
+**Example 1:** Calculate the total number of patients or visitors who responded to the survey in each facility (i.e, $\text{response rate } = \frac{\text{number of responses}}{\text{total number of surveys}} \times 100$). 
+
+Here we use the `round()` function to round off the result to the closest integer or numeric value as number of responses cannot contain decimal values. 
+
+```{r}
+#| eval: false
+cms_data |> 
+  mutate(no_of_responses = round(no_of_surveys * response_rate / 100))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> 
+  mutate(no_of_responses = no_of_surveys * response_rate)
+```
+
+```{=html}
+</details>
+```
+
+This creates a new column at the end of the data frame named 'no_of_responses' and computes the total number of responses. Because the number of columns is expanding, we can reduce the number of columns displayed using the `select()` function. 
+
+To do this, we need to use *chaining* which is discussed below. 
+
+### Chaining functions
+
+R *chaining* allows you to streamline your data analysis workflow by sequentially applying multiple operations to your data using the pipe operator `|>`. We often need to perform several data manipulation or analysis operations in a sequence. Chaining allows you to apply these operations one after the other in a clear and concise manner. 
+
+Here's a basic template for chaining operations using the pipe operator `|>`:
+
+```{r}
+#| eval: false
+result <- data |>
+    operation1(...) |>
+    operation2(...) |>
+    operation3(...) |>
+    ...
+    operationN(...)
+```
+
+In this template:
+
+- `data` represents the input data frame or object.
+- `operation1`, `operation2`, ..., `operationN` represent the functions or operations you want to apply sequentially to the data.For example: `select()`, `filter()` or `mutate()` functions. 
+- `...` represents any additional arguments or parameters that may be passed to each operation.
+
+Each operation takes the output of the previous operation as its input, making it easy to chain multiple operations together. This improves the readability of your code by organizing operations in a left-to-right fashion and it avoids creating intermediate variables to store the results of each operation. 
+
+### `mutate()` continued
+
+Let's use chaining to combine both `select()` and `mutate()` operations for the previos example:
+
+```{r}
+#| eval: false
+cms_data |> 
+  select(facility_name, no_of_surveys, response_rate) |> 
+  mutate(no_of_responses = round(no_of_surveys * response_rate / 100))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> 
+  select(facility_name, no_of_surveys, response_rate) |> 
+  mutate(no_of_responses = no_of_surveys * response_rate)
+```
+
+```{=html}
+</details>
+```
+
+### `summarise()`
+
+The `summarise()` function creates individual summary statistics from larger data sets.
+
+![](http://ohi-science.org/data-science-training/img/rstudio-cheatsheet-summarise.png)
+
+The output of `summarise()/summarize()` differs qualitatively from the input. It results in a smaller dataframe with a reduced representation of the original data. While not strictly necessary, it's advisable to assign new column names for the summary statistics generated by this function. This practice enhances clarity and organization in your data analysis workflow.
+
+**Example 1:** Calculate the mean number of surveys. 
+
+```{r}
+#| eval: false
+cms_data |> 
+  summarise(mean_no_of_surveys = mean(no_of_surveys))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> 
+  summarise(mean_no_of_surveys = mean(no_of_surveys))
+```
+
+```{=html}
+</details>
+```
+
+This results in a data frame of size 1 row $\times$ 1 col. We can create additional summary statistics by adding them in a comma-separated sequence as follows:
+
+
+```{r}
+#| eval: false
+cms_data |> 
+  summarise(mean_no_of_surveys = mean(no_of_surveys),
+            min_no_of_surveys = min(no_of_surveys),
+            max_no_of_surveys = max(no_of_surveys),
+            tot_no_of_surveys = sum(no_of_surveys))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> 
+  summarise(mean_no_of_surveys = mean(no_of_surveys),
+            min_no_of_surveys = min(no_of_surveys),
+            max_no_of_surveys = max(no_of_surveys),
+            tot_no_of_surveys = sum(no_of_surveys))
+```
+
+```{=html}
+</details>
+```
+
+#### `n()` helper function
+
+This function counts the number of observations in a dataset. It does not take any arguments, but simply counts the rows. 
+
+```{r}
+#| eval: false
+cms_data |> 
+  summarise(mean_no_of_surveys = mean(no_of_surveys),
+            min_no_of_surveys = min(no_of_surveys),
+            max_no_of_surveys = max(no_of_surveys),
+            tot_no_of_surveys = sum(no_of_surveys),
+            n_rows = n())
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> 
+  summarise(mean_no_of_surveys = mean(no_of_surveys),
+            min_no_of_surveys = min(no_of_surveys),
+            max_no_of_surveys = max(no_of_surveys),
+            tot_no_of_surveys = sum(no_of_surveys),
+            n_rows = n())
+```
+
+```{=html}
+</details>
+```
+
+
+### `arrange()`
+ 
+The `arrange()` function orders rows based on the values in a given column. 
+
+![](images/arrange.png)
+
+**Example 1:** Order the facilities based on the county. 
+
+```{r}
+#| eval: false
+cms_data |> 
+  arrange(county)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> 
+  arrange(county)
+```
+
+```{=html}
+</details>
+```
+
+**Example 2:** Sort the facilities based on the overall rating first and then by response rate.  
+
+```{r}
+#| eval: false
+cms_data |> 
+  arrange(overall_rating, response_rate)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> 
+  arrange(overall_rating, response_rate)
+```
+
+```{=html}
+</details>
+```
+
+#### `desc()` helper function
+
+This function is used to sort data in descending order. 
+
+**Example 3:** Sort the facilities in descending order based on the number of surveys 
+
+```{r}
+#| eval: false
+cms_data |> 
+  arrange(desc(no_of_surveys))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> 
+  arrange(desc(no_of_surveys))
+```
+
+```{=html}
+</details>
+```
+
+### `group_by()`
+
+The `group_by()` function groups data by one or more variables. It allows us to create sub groups based on labels in a particular column and to run subsequent functions or operations on all sub groups. 
+
+![](images/groupby.png)
+
+The `group_by()` function essentially partitions the data into separate subsets, each corresponding to a distinct category in a specified column. To observe this in action, inspect the structure using `str()` of the cms_data dataset before and after grouping:
+
+```{r}
+#| eval: false
+cms_data |> str()
+```
+
+```{=html}
+<details>
+  <summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> str()
+```
+
+```{=html}
+</details>
+```
+
+
+```{r}
+#| eval: false
+cms_data |> group_by(hospital_type) |> str()
+```
+
+```{=html}
+<details>
+  <summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data |> group_by(hospital_type) |> str()
+```
+
+```{=html}
+</details>
+```
+
+The result of applying `group_by()` is a 'grouped_df' (grouped data frame) and all subsequent functions are executed independently on each subgroup of the data.
+
+#### `ungroup()` helper
+
+The `ungroup()` function is used to remove grouping from a data frame or a grouped data frame created using the `group_by()` function. 
+
+When you apply `group_by()` to a data frame, it creates a grouped data frame where operations like summarization or manipulation are performed within each group defined by the grouping variables. However, in some cases, you may want to remove the grouping structure and return to the original ungrouped data frame. This is where the `ungroup()` function comes into play.
+
+### Combining multiple `dplyr` functions
+
+In this section, we will be using the Australian_Cancer_Incidence_and_Mortality.csv dataset.
+
+```{r}
+#| warning: false
+#| message: false
+cancer_mort <- read_csv("data/Australian_Cancer_Incidence_and_Mortality.csv")
+```
+
+First, let's examine the dimensions of this dataset. 
+
+```{r}
+#| eval: false
+dim(cancer_mort)
+```
+
+```{=html}
+<details>
+  <summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+dim(cancer_mort)
+```
+
+```{=html}
+</details>
+```
+
+Next, let's take a look at the top few rows of this data frame.
+
+```{r}
+#| eval: false
+head(cancer_mort)
+```
+
+```{=html}
+<details>
+  <summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+head(cancer_mort)
+```
+
+```{=html}
+</details>
+```
+
+
+#### `count()` helper
+
+The `count()` function is used to count the number of occurrences of unique values in one or more variables within a data frame. This function is particularly useful for summarizing data and understanding the distribution of values within a dataset.
+
+It is a convenient function that combines `group_by()` and `summarize()` in one step, particularly useful for counting occurrences of character data.
+
+**Example 1:** Count the number of cancers observed in each cancer type.  
+
+```{r}
+#| eval: false
+cancer_mort |> count(Cancer_Type)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cancer_mort |> count(Cancer_Type)
+```
+
+```{=html}
+</details>
+```
+
+In the count summary output column is typically denoted as 'n'. The same output can be observed by combining `group_by()` and `summarise()` functions as follows.
+
+```{r}
+#| eval: false
+cancer_mort |> 
+  group_by(Cancer_Type) |> 
+  summarise(n = n())
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cancer_mort |> 
+  group_by(Cancer_Type) |> 
+  summarise(n = n())
+```
+
+```{=html}
+</details>
+```
+
+
+**Example 2:** Count the number of cancers observed in each cancer type and age group.  
+
+```{r}
+#| eval: false
+cancer_mort |> count(Cancer_Type, Age)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cancer_mort |> count(Cancer_Type, Age)
+```
+
+```{=html}
+</details>
+```
+
+#### `sample_n()` helper
+
+The `sample_n()` function is used to randomly select a specified number of rows from a data frame. 
+
+**Example 1:** Sample 10 rows from the cancer_mort dataset. 
+
+```{r}
+#| eval: false
+cancer_mort |> sample_n(10)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cancer_mort |> sample_n(10)
+```
+
+```{=html}
+</details>
+```
+
+
+**Example 2:** Sample 3 rows randomly from each cancer type.
+
+```{r}
+#| eval: false
+cancer_mort |> 
+  group_by(Cancer_Type) |> 
+  sample_n(3)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cancer_mort |> 
+  group_by(Cancer_Type) |> 
+  sample_n(3)
+```
+
+```{=html}
+</details>
+```
+
+
+Try out the following examples by yourself first.
+
+1. Find the total number of male deaths in each year.
+
+To find the total number of male deaths in each year, we begin by filtering out the rows where the Sex column contains "Male" and the type column conatins "Mortality", as we are only interested in male deaths.
+
+```{r}
+#| eval: false
+cancer_mort |> filter(Sex == "Male" & Type == "Mortality")
+```
+
+Since we need to compute the total  number of deaths **in each year**, we group this filtered data frame by year. This will create a grouping for each year. This grouping allows us to compute the total number of deaths (i.e., Counts) for each year. 
+
+```{r}
+#| eval: false
+cancer_mort |> 
+  filter(Sex == "Male" & Type == "Mortality") |> 
+  group_by(Year)
+```
+
+Putting these operations/functions together, we obtain the final answer:
+
+```{=html}
+<details>
+  <summary>Check the Answer</summary>
+```
+
+```{r}
+#| eval: false
+cancer_mort |> 
+  filter(Sex == "Male" & Type == "Mortality") |> 
+  group_by(Year) |> 
+  summarise(tot_male_deaths = sum(Count))
+```
+
+```{=html}
+</details>
+```
+
+2. Find the top three cancer types and the age group with the highest average cancer incidences reported across all years.
+
+**Hints:**
+
+- Since we are concerned only about cancer incidences, first filter the dataset using `filter()` function to include only the rows with cancer incidences.
+- Next, compute the average of cancer incidences reported across all years. If we use `summarise()` function next, we will have a single average value for the whole data frame. However, this question asks us to find the top three cancer types and age group, which means we need to compute the average after grouping the rows based on cancer type and age group. This can be achieved using the `group_by()` function with multiple columns as arguments (e.g., `group_by(col1, col2)`). 
+- Once grouped, use `summarise()` function to compute the mean across these groupings.
+- Since we're interested in only the top three highest values, chain the result of the above functions to the `arrange()` function to sort the averages in descending order.
+
+```{=html}
+<details>
+  <summary>Check the Answer</summary>
+```
+
+```{r}
+#| eval: false
+cancer_mort |> 
+  filter(Type == "Incidence") |> 
+  group_by(Cancer_Type, Age) |> 
+  summarise(average = mean(Count)) |> 
+  arrange(desc(average))
+```
+
+
+```{=html}
+</details>
+```
+
+3. Find the year, cancer type and age group with the highest cancer count observed among age groups above 29. 
+
+**Hints:**
+
+- Start by selecting the columns of interest using the `select()` function. Remember you need to include four columns.
+- Next, filter the rows to include only those with age groups above 29. We can use the `%in%` operator with a vector of age groups to filter rows using the `filter()` function. For example: 
+`filter(Age %in% c("30-34", "35-39", "40-44", "45-49", ..., "85+")`. This is time consuming and laborious as we need to type 10+ age groups. There are two ways to make this step easier:
+  1. Using the `unique()` function: This function returns a vector/data frame with duplicate elements removed. In other words, it returns the unique elements. Find the unique elements of the age column (i.e., `unique(cancer_mort$Age)`) and then create a char vector manually by copying and pasting the age groups of interest. 
+  2. Using `!` operator: The easiest way is to select all the age groups that is less than or equal to 29 and then use the `!` (NOT) operator to negate the logical vector. For example:
+  `filter(!Age %in% c('0-4', '5-9', '10-14','15-19', '20-24', '25-29'))`
+  This will select the rows that does not contain age groups in the given vector. 
+- Finnaly, sort the resulting data frame to find the highest cancer count.   
+
+```{=html}
+<details>
+  <summary>Check the Answer</summary>
+```
+
+```{r}
+#| eval: false
+cancer_mort |> 
+  filter(!Age %in% c('0-4', '5-9', '10-14','15-19', '20-24', '25-29')) |> 
+  arrange(desc(Count))
+```
+
+```{=html}
+</details>
+```
+
+4. Find the minimum, maximum, number of observations and quartile statistics for each cancer type among women, men and other genders. 
+
+```{=html}
+<details>
+  <summary>Check the Answer</summary>
+```
+
+```{r}
+#| eval: false
+cancer_mort |> 
+  group_by(Cancer_Type, Sex) |> 
+  summarise(minimum_count = min(Count), 
+            quartile_1 = quantile(Count, probs = 0.25), 
+            quartile_2 = median(Count),
+            quartile_3 = quantile(Count, probs = 0.75),
+            maximum_count = max(Count),
+            n_count = n())
+```
+
+```{=html}
+</details>
+```
+
+5. Find the percentage of deaths attributed to each type of cancer as a function of the total number of deaths.
+
+```{=html}
+<details>
+  <summary>Check the Answer</summary>
+```
+
+```{r}
+cancer_mort |> 
+  filter(Type == "Incidence") |> 
+  group_by(Cancer_Type) |>
+  summarise(tot_deaths = sum(Count)) |> 
+  ungroup() |> 
+  mutate(percent_deaths = (tot_deaths * 100)/sum(tot_deaths)) 
+```
+```{=html}
+</details>
+```
+
+### Additional `dplyr` functions
+
+In this section, we'll explore several additional functions from the `dplyr` package. We'll demonstrate these functions using both the cms_data and cancer_mort datasets.
+
+- **`across()` function**
+
+This function allows you to apply a transformation or calculation across multiple columns of a data frame. It is often used with functions like `mutate()` or `summarise()`, enabling you to perform the same operation on multiple columns at once.
+
+```{r}
+#| eval: false
+# find the mean and standard deviation of star rating and overall rating for each hospital type. 
+cms_data |> 
+  group_by(hospital_type) |>          
+  summarise(across(                   
+    c(star_rating, overall_rating), 
+    list(mean = mean, sd = sd)))
+```
+
+- **`distinct` function**
+
+This function is used to select unique rows from a data frame, removing any duplicate rows.
+
+```{r}
+#| eval: false
+# find the unique or distinct cancer types
+cancer_mort |> distinct(Cancer_Type)
+```
+
+- **`slice()` function**
+
+This function extracts specific rows from a data frame based on their position. You can specify the row numbers or a range of row numbers to extract.
+
+```{r}
+#| eval: false
+# select a range of rows
+cancer_mort |> slice(2:5)
+
+# drop rows with negative indices
+cancer_mort |> slice(-(10:n()))
+```
+
+- **`slice_head()/slice_tail()` functions**
+
+The `slice_head()` function extracts the first few rows (specified by a number) and the `slice_tail()` function extracts the last few rows (specified by a number) from a data frame.
+
+```{r}
+#| eval: false
+# similar to head(3)
+cancer_mort |> slice_head(n = 3)
+
+# similar to tail(4)
+cancer_mort |> slice_tail(n = 4)
+```
+
+- **`slice_min()/slice_max()` function**
+
+The `slice_min()` function extracts the rows with the minimum values of a specified variable and the `slice_max()` function extracts the rows with the maximum values of a specified variable from a data frame.
+
+```{r}
+#| eval: false
+# 5 rows with the minimum overall rating
+cms_data |> slice_min(overall_rating, n = 5)
+
+# 4 rows with the maximum 5 overall rating
+cms_data |> slice_max(overall_rating, n = 6)
+```
+
+- **`slice_sample()` function**
+
+This function randomly samples a specified number of rows from a data frame.
+
+```{r}
+#| eval: false
+# randomly select 5 rows
+cancer_mort |> slice_sample(n = 5)
+
+# randomly select 3 rows from each groupings
+cancer_mort |> group_by(Age) |> slice_sample(n = 3)
+```
+
+
+- **`add_row()` function**
+
+This function adds one or more rows to a data frame. You can specify the values for each column of the new rows.
+
+```{r}
+#| eval: false
+# add a row before the 3rd row. Missing values are entered as NA
+cancer_mort |> add_row(Year = 2024, Type = "Mortality", Count = 100, .before = 3)
+```
+
+- **`relocate()` function**
+
+This function allows you to change the position of columns within a data frame. You can specify the target position where you want to move the column to.
+
+```{r}
+#| eval: false
+# move the Cancer type column to be positioned after the Year column
+cancer_mort |> relocate(Cancer_Type, .after = Year)
+```
+
+## Joining Data Frames
+
+Often, data originates from various sources or files, and the need arises to consolidate them for analysis. These datasets, when merged, are often referred to as relational data due to the inherent relationships between them that we aim to leverage. Within the tidyverse framework, this process of merging related data is termed *joining*. Here, we combine data from multiple datasets based on a common variable or set of variables. 
+
+![](images/joining.png)
+
+For illustration purposes, let's use the following two data frames in the subsequent examples. 
+```{r}
+left = data.frame(
+         key1 = c("K0", "K1", "K2", "K3"),
+         A    = c("A0", "A1", "A2", "A3"),
+         B    = c("B0", "B1", "B2", "B3"))
+
+right = data.frame(
+         key1 = c("K0", "K1", "K1", "K4"),
+         C    = c("C0", "C1", "C2", "C3"),
+         D    = c("D0", "D1", "D2", "D3"))
+```
+
+
+There are several types of joins commonly used in R outlined below. 
+
+### Left Join
+
+A left join returns all rows from the left data frame (the first data frame specified) and matching rows from the right data frame (the second data frame specified). Non-matching rows in the right data frame have NULL (or NA) values in the result.
+
+![](images/joining-left.png)
+
+:::: {.columns}
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+left
+```
+
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+right
+```
+
+:::
+
+::::
+
+```{r}
+#| classes: scrolling
+left_join(left, right, by = "key1")
+```
+
+### Right join
+
+A right join is similar to a left join but returns all rows from the right data frame and matching rows from the left data frame. Non-matching rows in the left data frame have NULL (or NA) values in the result.
+
+![](images/joining-right.png)
+
+:::: {.columns}
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+left
+```
+
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+right
+```
+
+:::
+
+::::
+
+```{r}
+#| classes: scrolling
+right_join(left, right, by = "key1")
+```
+
+
+### Inner join
+
+An inner join returns only the rows with matching values in the specified columns (the common key). It combines data from two or more tables or DataFrames based on the intersection of keys, excluding rows that do not have corresponding matches in both tables.
+
+![](images/joining-inner.png)
+
+:::: {.columns}
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+left
+```
+
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+right
+```
+
+:::
+
+::::
+
+```{r}
+#| classes: scrolling
+inner_join(left, right, by = "key1")
+```
+
+### Full Join
+
+A full join returns all rows from both datasets, filling in NA values for non-matching rows.
+
+![](images/joining-full.png)
+
+:::: {.columns}
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+left
+```
+
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+right
+```
+
+:::
+
+::::
+
+```{r}
+#| classes: scrolling
+full_join(left, right, by = "key1")
+```
+
+## Binding multiple data frames
+
+The `dplyr` package provides convenient functions forbinding data frames by row or column to combine one or more data frames into one data frame. 
+
+For illustration purposes, let's use the following data frames in the subsequent examples. 
+
+```{r}
+df1 = data.frame(
+  ID         = 1:3,
+  name       = c("Eva", "Charlie", "John"),
+  occupation = c("Doctor", "Nurse", "Manager"))
+df2 = data.frame(
+  ID         = 4:6,
+  name       = c("Peter", "Jane", "Alice"),
+  occupation = c("Radiographer", "Therapist", "Consultant"))
+df3 = data.frame(
+  location   = c("Parkville", "Box Hill", "East Melbourne"),
+  grade      = c("A", "A", "C"))
+```
+
+1. **Binding by Row:**
+   - To bind data frames by row, you can use the `bind_rows()` function.
+   - This function stacks data frames on top of each other, matching columns by name.
+
+:::: {.columns}
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+df1
+```
+
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+df2
+```
+
+:::
+
+::::
+
+```{r}
+#| classes: scrolling
+bind_rows(df1, df2)
+```
+
+
+2. **Binding by Column:**
+   - To bind data frames by column, you can use the `bind_cols()` function from `dplyr`.
+   - This function appends columns from one data frame to another, matching rows by position.
+
+:::: {.columns}
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+df1
+```
+
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+```{r}
+#| classes: scrolling
+df3
+```
+
+:::
+
+::::
+
+```{r}
+#| classes: scrolling
+bind_cols(df1, df3)
+```
+
+That wraps up our exploration of data transformation using the `dplyr` package. In the next section, we'll delve into visualization with the `ggplot2` package from the tidyverse suite. We'll apply the functions we've learned in this section to generate various plots. Stay tuned for more!

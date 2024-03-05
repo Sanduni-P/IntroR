@@ -1,0 +1,1277 @@
+---
+title: "Into the Tidyverse"
+---
+
+Common tasks in working with data include actions like removing rows or columns, performing calculations, or adding new columns. This sort of operations is known as data manipulation. It is the process of cleaning, organizing, and transforming raw data into a more structured and usable format for analysis.
+
+In this workshop, we'll guide you through the process of data manipulation in R, starting with the tidyverse. The tidyverse is a collection of packages that align with a data science philosophy developed by Hadley Wickham and the RStudio team. Many users find it to be a more intuitive way to grasp R concepts. Although some tasks may be more straightforward in base-R, we'll also highlight those aspects.
+
+If you've already installed the tidyverse package (if not, you can do so by running the command: `install.packages("tidyverse")`), let's proceed to load it into our R session:
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+The following are key techniques outlined in Hadley Wickham and Garrett Grolemund's book, [R for Data Science](http://r4ds.had.co.nz/):
+
+![](http://ohi-science.org/data-science-training/img/r4ds_data-science.png){fig-align="center"}
+
+This workshop focuses on: 
+
+- **Import:** `readr` to import data. 
+- **Tidy:** `tidyr` to organize rows of data into unique values. 
+- **Transform:** `dplyr` to perform data manipulation, involving tasks such as subsetting by rows or columns, sorting, and joining. 
+- **Visualize:** `ggplot2` to create static plots, applying the principles of the grammar of graphics.
+
+This workflow is of utmost importance. Instead of constructing analyses based on the unconventional format of your data, take measures to tidy up your data. Tidy data enables the use of number of analytical and visualization tools. It eliminates the need to develop ad-hoc methods to accommodate your data. This not only saves time but also enhances the clarity and comprehensibility of your work, benefiting both your collaborators and, most importantly, your future self.
+
+# Step 1: Importing data
+
+First we need to import data into our R session. This can be achieved either by using datasets bundled with R packages or by importing external data into our workspace for data manipulation. This is the first step in the tidyverse workflow.
+
+![](images/life-cycle-1.png){fig-align="center"}
+
+## Preloaded Data in R Packages
+
+A great way to learn data science tools is using the data provided by R packages. The `data()` function is a convenient way to explore and import pre-loaded datasets that come bundled with the R environment.
+
+```{r}
+#| warning: false
+library(tidyverse)
+data()
+```
+
+```{=html}
+<details>
+<summary>View Output</summary>
+```
+
+![](images/datasets){fig-align="center"}
+
+```{=html}
+</details>
+```
+
+To import pre-loaded datasets bundled with a particular package (e.g., tidyr):
+
+```{r}
+data(package = "tidyr")
+```
+
+```{=html}
+<details>
+<summary>View Output</summary>
+```
+
+![](images/tidyr-dataset){fig-align="center"}
+
+```{=html}
+</details>
+```
+
+When you load a package the pre-loaded datasets automatically imported into you R environment. Therefore you can access them directly as follows.
+
+```{r}
+#| class-output: output
+#| eval: false
+household
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+household
+```
+
+```{=html}
+</details>
+```
+
+```{r}
+?household
+```
+
+```{=html}
+<details>
+<summary>View Output</summary>
+```
+
+```{r, echo = F}
+#| classes: helpscroll
+#| results: asis
+#| echo: false
+tools:::Rd2HTML(utils:::.getHelpFile(help(household)))
+```
+
+```{=html}
+</details>
+```
+
+## Reading the Data
+
+At some point, you want to apply what you've learned to your own data. In this section, you'll learn the basics of reading data files into R using the **readr** package. The goal of readr is to provide a fast and friendly way to read rectangular data from delimited files, such as comma-separated values (CSV) and tab-separated values (TSV). It is designed to parse many types of data.
+
+We will use the `read_csv()` function from readr package to import a dataset. (See also `read.csv()` in base R.) CSV short for Comma Separated Values, is a text format commonly used to store tabular data. Conventionally the first line contains column headings.
+
+The first argument of the `read_csv()` function takes the path to the file (or a web link). The following code will work if the cms_hospital_patient_satisfaction_2016_sampled.csv file is in the data/patient_satisfaction path.
+
+```{r}
+#| eval: false
+# here the first argument is a path
+cms_data <- read_csv("data/patient_satisfaction/cms_hospital_patient_satisfaction_2016_sampled.csv")
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+cms_data <- read_csv("data/patient_satisfaction/cms_hospital_patient_satisfaction_2016_sampled.csv")
+```
+
+```{=html}
+</details>
+```
+
+```{r}
+#| eval: false
+# here the first argument is a web link
+mtvcars <- read_csv("https://github.com/tidyverse/readr/raw/main/inst/extdata/mtcars.csv")
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+mtvcars <- read_csv("https://github.com/tidyverse/readr/raw/main/inst/extdata/mtcars.csv")
+```
+
+```{=html}
+</details>
+```
+
+This command prints out a message telling you the number of rows and columns of data, the delimiter that was used, and the column specifications (names of columns organized by the type of data the column contains).
+
+## Other file types
+
+Once you've mastered `read_csv()`, using other functions in the readr package is straightforward. It's just a matter of knowing which function to use:
+
+-   `read_csv2()` reads semicolon-separated files. These use ; instead of , to separate fields and are common in countries that use , as the decimal marker or thousands seperator.
+-   `read_tsv()`reads tab-delimited files.
+-   `read_delim()` reads in files with any delimiter, attempting to automatically guess the delimiter if you don't specify it.
+
+## Exploring the Data
+
+In the previous section we imported a dataset that is bundled with the tidyr package, into a dataframe named *household*. In the next section we read in a CSV file and created a data frame named *cms_data*. This section demonstrates different ways to get to know these two data objects.
+
+The `class()` function is used to identify the data type or data structure of an object (or variable):
+
+```{r}
+#| eval: false
+class(household)
+class(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+class(household)
+class(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+When the name of the object (data frame) is typed, the first few lines along with some information, such as the number of rows are displayed:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data
+```
+
+```{=html}
+</details>
+```
+
+The `dim()` function prints the dimensions (rows x columns) of the data frame:
+
+```{r}
+#| eval: false
+dim(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+dim(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+This information is available at the environment pane in the top right panel as the number of observations (rows) and variables (columns).
+
+The `nrow()` function prints the number of rows while `ncol()` prints the number of columns:
+
+```{r}
+#| eval: false
+nrow(cms_data)
+ncol(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+nrow(cms_data)
+ncol(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+The `View()` function gives a spreadsheet-like view of the data frame:
+
+```{r}
+#| eval: false
+View(cms_data)
+```
+
+By clicking the object on the environment tab also gives a spreadsheet-like view of the object: ![](images/environment-variable.jpg){fig-align="center"}
+
+The `glimpse()`function (dplyr package) displays a compact summary of the data frame, showing you key details such as the data types of each column, the first few values, and the total number of observations.
+
+```{r}
+#| eval: false
+glimpse(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+glimpse(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+The `head()` function prints the top 6 rows of a data frame:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+head(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+head(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+Similarly, the `tail()` function prints the bottom 6 rows of the data frame:
+
+```{r}
+#| eval: false
+tail(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+tail(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+The `colnames()` function displays all the column names:
+
+```{r}
+#| classes: scrolling
+colnames(cms_data)
+```
+
+The `$` symbol allows access to individual columns. To display 'Hospital Type' column:
+
+```{r}
+#| error: true
+cms_data$Hospital Type
+```
+
+Since the column names contain spaces, they need to be enclosed within \`\` (backticks) for R to interpret it as a single variable:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data$`Hospital Type` # or cms_data$"Hospital Type"
+```
+
+It is a good practice to rename all the columns with spaces into a format that R can interpret. Conventionally, \_ (underscore) is used to separate words in column names and variables instead of (space). We can rename a single column using the `rename()` function:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+cms_data <- rename(cms_data, Hospital_Type = "Hospital Type")
+head(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+cms_data <- rename(cms_data, Hospital_Type = "Hospital Type")
+head(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+Note: To modify the original cms_data object, it is essential to assign the renamed object to cms_data. Otherwise, a copy of the cms_data object is changed.
+
+Or by directly assigning a new column name:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+colnames(cms_data)[2] <- "Facility_Name"
+head(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+colnames(cms_data)[2] <- "Facility_Name"
+head(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+Using the above methods to rename multiple columns just to replace space with underscore can be laborious. A quick way to replace all spaces in the column names with underscore is shown below.
+
+**Option 1:**
+
+```{r}
+#| eval: false
+# by string substituting _ in place of ' '(space)
+colnames(cms_data) <- gsub(" ", "_", colnames(cms_data))
+colnames(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+gsub(" ", "_", colnames(cms_data))
+```
+
+```{=html}
+</details>
+```
+
+
+
+Here the `gsub()` function replace space with underscores in the column names of the cms_data. This new object needs to be assigned (`<-`) to `colnames(cms_data)` in order for the changes to be saved in the cms_data object.
+
+**Option 2:**
+
+Here we use the janitor package which contains functions to clean data. You first need to install and load the library before using it.
+
+```{r}
+#| eval: false
+#| warning: false
+# using janitor package
+library(janitor) # remember to install janitor: install.packages("janitor")
+cms_data <- cms_data |> clean_names()
+cms_data
+```
+
+```{r}
+#| eval: false
+#| classes: scrolling
+#| echo: false
+#| warning: false
+library(janitor)
+cms_data |> clean_names()
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| classes: scrolling
+#| echo: false
+#| warning: false
+library(janitor)
+cms_data |> clean_names()
+```
+
+```{=html}
+</details>
+```
+
+Here we are *sending* the cms_data data frame into the function `clean_names()` which replaces replaces spaces with underscore in column names. Note that it also convert all characters in column names to lower case.
+
+The default format is [snake case](https://en.wikipedia.org/wiki/Snake_case) styled as snake_case. You can specify other formats like [camel case](https://en.wikipedia.org/wiki/Camel_case), [title case](https://en.wikipedia.org/wiki/Title_case).
+
+**Option 3:**
+
+Additionally, we can use the `make.names()` function in base R which replaces ' ' (spaces) with . (dots).
+
+```{r}
+#| eval: false
+# using make.names() function
+colnames(cms_data) <-  make.names(colnames(cms_data))
+colnames(cms_data) 
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| classes: scrolling
+#| echo: false
+make.names(colnames(cms_data))
+```
+
+```{=html}
+</details>
+```
+
+The `str()` function shows the structure of the data:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+str(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+str(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+The `summary()` function generates summary statistics:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+summary(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+summary(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+A statitical overview can be obtained using the `skim()` function in skimr package:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+library(skimr)
+skim(cms_data)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+library(skimr)
+skim(cms_data)
+```
+
+```{=html}
+</details>
+```
+
+## Writing Data to a File
+
+Writing data to a file is a fundamental operation in programming and data analysis. It involves taking data from within a program or environment and storing it in a file on a disk for later use or sharing. This section explains the basics of writing a data file using the **readr** package. 
+
+The `write_csv()` and `write_tsv()` functions are part of the **readr** package, which is designed for writing delimited files like CSV (comma-separated values) and TSV (tab-separated values). These functions are used to write data frames into CSV and TSV files, respectively.
+
+We first provide the variable name of the data frame followed by the file name (ideally including the full folder location). 
+
+To write a CSV file:
+```{r}
+#| eval: false
+# on Mac:
+write_csv(cms_data, "~/Desktop/cms_data.csv")
+
+# on Windows
+write_csv(cms_data, "C:/Users/srajapaksa/Desktop/cms_data.csv")
+```
+
+To write a TSV file:
+```{r}
+#| eval: false
+# on Mac:
+write_tsv(cms_data, "~/Desktop/cms_data.csv")
+
+# on Windows
+write_tsv(cms_data, "C:/Users/srajapaksa/Desktop/cms_data.csv")
+```
+
+# Step 2: Tidy Data
+
+Tidy data is a structured and organized format for presenting data that follows a simple convention: variables are placed in columns, observations are placed in rows and values are placed in cells. This standardized arrangement makes it easy to work with and analyze data efficiently. The principles of tidy data, popularized by Hadley Wickham, are designed to promote consistency and ease of use in data analysis.
+
+![](https://r4ds.hadley.nz/images/tidy-1.png){fig-align="center"}
+
+This is the second step in the tidyverse workflow.
+
+![](images/life-cycle-2.png){fig-align="center"}
+
+Let's take a look at some examples.
+
+Data is often entered in a wide format, where each row typically represents a site, subject, or patient, and there are multiple observation variables containing the same type of data.
+
+For instance, consider the AirPassengers dataset. It contains information on monthly airline passenger numbers from 1949 to 1960. In this dataset, each row corresponds to a single year, and the columns represent each month from January to December.
+
+```{r}
+#| eval: false
+AirPassengers
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+AirPassengers
+```
+
+```{=html}
+</details>
+```
+
+Wide format is intuitive for data entry. But it is less so for data analysis. Consider calculating the monthly mean; where would you place it? Would it be another row?
+
+Data needs to be reshaped to conform to the tidy data structure. It involves using two primary verbs (or pairs of opposites):
+
+-   Convert columns into rows (`pivot_longer()`).
+-   Convert rows into columns (`pivot_wider()`).
+-   Convert a character column into multiple columns (`separate_wider_delim()` and `separate_wider_position()`).
+-   Combine multiple character columns into a single column (`unite()`).
+
+![](images/tidy-data-verbs.png){fig-align="center"}
+
+First, load the `tidyr` package. Since you have already installed the tidyverse, you should be able to load it directly as follows (otherwise install it using the command `install.packages("tidyverse")` if necessary):
+
+```{r}
+library(tidyverse)
+```
+
+## Converting data from wide to long format
+
+First read the counts file called GSE60450_normalized_data.csv that is in a folder called data (i.e. the path to the file should be data/GSE60450_normalized_data.csv).
+
+```{r}
+#| eval: false
+#| classes: scrolling
+#| warning: false
+counts <- read_csv("data/GSE60450_normalized_data.csv")
+head(counts)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+#| warning: false
+counts <- read_csv("data/GSE60450_normalized_data.csv")
+head(counts)
+```
+
+```{=html}
+</details>
+```
+
+To transform this table from a wide format to a long format, we use the `pivot_longer()` function. It's important to note that this function does not create tidy data as it duplicates rows. However, the output in 'long format' from `pivot_longer()` is often necessary for ggplot, where each aesthetic or facet category must be a single column of values and for `left_join()`, which will be introduced later.
+
+This operation will convert multiple columns with counts for each sample into a single column containing all the expression values, as illustrated in the image below.
+
+![](images/piv-long.png){fig-align="center"} The `pivot_longer()` function takes three arguments:
+
+1.  **cols =** : a vector indicating the names of the columns to be converted into labels in long form.
+2.  **names_to =** : a name or vector of names for the new column(s) containing the labels from the specified columns.
+3.  \*\*values_to =\* \*: a name for the new column containing the values corresponding to the specified columns.
+
+It's important to note that when using `pivot_wider()`, the new column names need to be enclosed in quotes.
+
+```{r}
+seqdata <- counts |> 
+  pivot_longer(cols = starts_with("GSM"), 
+               names_to = "Sample", 
+               values_to = "Count")
+```
+
+The `cols = starts_with("GSM")` command returns a vector of columns whose names starts with "GSM". `pivot_longer()` will then transform the those columns into two new columns, denoted as "Sample" and "Count." The parameter `names_to = "Sample"` indicates that the new column containing the specified columns (defined by cols) should be named "Sample," while `values_to = "Count"` specifies that the new column containing the values should be named "Count."
+
+```{r}
+#| eval: false
+#| classes: scrolling
+seqdata
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+seqdata
+```
+
+```{=html}
+</details>
+```
+
+Alternatively, we could achieve the same outcome by specifying a column range using the following command:
+
+```{r}
+seqdata <- counts |> 
+  pivot_longer(cols = GSM1480291:GSM1480302, 
+               names_to = "Sample", 
+               values_to = "Count")
+```
+
+We can also specify the columns we don't want to reformat, and `pivot_longer()` will then reformat all the columns except those. To achieve this, we place a minus sign ("-") in front of the column names that we wish to exclude. This is a commonly used approach with `pivot_longer()`, as it can be more convenient to exclude columns we don't need rather than explicitly include the ones we want.
+
+```{r}
+seqdata <- counts |> 
+  pivot_longer(cols = -c(X, gene_symbol), 
+               names_to = "Sample", 
+               values_to = "Count")
+```
+
+## Converting data from long to wide format
+
+First, read the annotation file called GSE60450_annotation.csv (the path to the file should be data/GSE60450_annotation.csv).
+
+```{r}
+#| eval: false
+#| classes: scrolling
+#| warning: false
+annot <- read_csv("data/GSE60450_annotation.csv")
+head(annot)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+#| warning: false
+annot <- read_csv("data/GSE60450_annotation.csv")
+head(annot)
+```
+
+```{=html}
+</details>
+```
+
+To transform this table so that it conforms to the tidy principles, we use the `pivot_wider()` function.
+
+This operation will convert multiple rows with type and annotation into columns containing the Symbol and Gene_name, as illustrated in the image below.
+
+![](images/piv-wide.png){fig-align="center"}
+
+The `pivot_wider()` function takes two arguments:
+
+1.  **names_from =** : a name or a vector of names of column(s) containing the labels that will be transformed into the new column names.
+2.  **values_from =** : a name or a vector of names of column(s) containing the values that will fill the new columns.
+
+In our scenario, to reshape the annot data frame, we will use the column names Type and Annotation:
+
+```{r}
+annot_tidy <- annot |> 
+  pivot_wider(names_from = Type, 
+              values_from = Annotation)
+```
+
+The above operation changes the 'shape' of the dataframe from a longer format (more rows) to a wider format (more columns). While the original table consists of 40 rows, using `pivot_wider()` results in only 20 rows. This reduction is due to the de-duplication of rows during the creation of new columns.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+annot_tidy
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+annot_tidy
+```
+
+```{=html}
+</details>
+```
+
+It's important to note that since we only have two distinct labels in the Type column, we are essentially replacing the existing two columns with just two new columns. Consequently, the shape of the output doesn't technically become wider than the input data frame. However, when there are more than two unique labels in the names_from column, the output will indeed become wider compared to the input.
+
+## Separating Columns
+
+First, read the metadata file called GSE60450_metadata.csv (the path to the file should be data/GSE60450_metadata.csv).
+
+```{r}
+#| eval: false
+#| classes: scrolling
+#| warning: false
+metadata <- read_csv("data/GSE60450_metadata.csv")
+head(metadata)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+#| warning: false
+metadata <- read_csv("data/GSE60450_metadata.csv")
+head(metadata)
+```
+
+```{=html}
+</details>
+```
+
+To transform this table so that it conforms to the tidy principles, we use the `separate_wider_position()`/`separate_wider_delim()` function. This operation will separate characteristic column into 3 separate columns containing the tissue_type, immunophenotype and development_stage, as illustrated in the image below.
+
+![](images/separate.png){fig-align="center"}
+
+The `separate_wider_delim()` function takes three arguments:
+
+1.  **cols =** : a name or a vector of names of the column(s) that requires separation into multiple columns.
+2.  **delim =** : delimeter (or separator) between values. This is same as the `delim =` in `read_delim()`.
+3.  **names =** : a vector containing column names for the the new columns.
+
+To separate characteristic column in the metadata data frame into three separate columns based on the delimeter ; (semi colon), we can use the `separate_wider_delim()` function:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+metadata_lform <- metadata |> 
+  separate_wider_delim(cols = characteristics, 
+                       delim =";",
+                       names = c("tissue_type", "immunophenotype", "development_stage"))
+metadata_lform
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+metadata_lform <- metadata |> 
+  separate_wider_delim(cols = characteristics, 
+                       delim =";",
+                       names = c("tissue_type", "immunophenotype", "development_stage"))
+metadata_lform
+```
+
+```{=html}
+</details>
+```
+
+The `separate_wider_position()` function splits at fixed widths and takes two arguments:
+
+1.  **cols =** : a name or a vector of names of the column(s) that requires separation into multiple columns.
+2.  **widths =** : a named vector containing numbers where the names become the new column names and values specify the column widths.
+
+For instance, we can divide the gene_id column into three separate columns to evaluate the functionality of this operation (this is provided purely as an example):
+
+```{r}
+#| eval: false
+#| classes: scrolling
+metadata_lform |> 
+  separate_wider_position(cols = gene_id, 
+                          widths = c(code = 3, prefix = 4, id = 3))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+metadata_lform |> 
+  separate_wider_position(cols = gene_id, 
+                          widths = c(code = 3, prefix = 4, id = 3))
+```
+
+```{=html}
+</details>
+```
+
+## Uniting Columns
+
+The `unite()` function is the complement of `separate()`. Therefore, let's revert what we did in the previous section to combine multiple columns to a single column as illustrated in the image below.
+
+![](images/unite.png){fig-align="center"}
+
+The `unite()` function takes three arguments:
+
+1.  **col =** : name of the new column that will contain the united values.
+2.  **... =** : a vector containing column names to unite.
+3.  **sep =** : delimeter (or separator) this is same as the `delim =` in `read_delim()`. If we don't specify a separator to insert between the combined values, they will be separated by \_ (underscores).
+
+To separate characteristic column in the metadata data frame into three separate columns:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+metadata_lform |> 
+  unite(col = characteristics, 
+        tissue_type, immunophenotype, development_stage,
+        sep = ",")
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+metadata_lform |> 
+  unite(col = characteristics, 
+        tissue_type, immunophenotype, development_stage,
+        sep = ",")
+```
+
+```{=html}
+</details>
+```
+
+## Missing Values
+
+A value can be missing in one of two possible ways:
+
+-   Explicitly, meaning it is flagged with NA.
+-   Implicitly, implying that it is just not present in the data.
+
+Let's illustrate this idea with a very simple data frame:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+covid_vac <- data.frame(
+    year = c(2020, 2020, 2021, 2021, 2021,  2023, 2023,
+             2023, 2024, 2024), 
+    vaccine_type = c("Pfizer", "Moderna", "Pfizer", "Moderna", "Novavax", 
+                   "Pfizer", "Moderna", 
+                  "Novavax", "Moderna", NA),
+    count = c(0, 3, 63, 88, 51,
+               38, 19,
+              5, 9, 7)
+)
+covid_vac
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+covid_vac <- data.frame(
+    year = c(2020, 2020, 2021, 2021, 2021,  2023, 2023,
+             2023, 2024, 2024), 
+    vaccine_type = c("Pfizer", "Moderna", "Pfizer", "Moderna", "Novavax", 
+                   "Pfizer", "Moderna", 
+                  "Novavax", "Moderna", NA),
+    count = c(0, 3, 63, 88, 51,
+               38, 19,
+              5, 9, 7)
+)
+covid_vac
+```
+
+```{=html}
+</details>
+```
+
+In this dataset, we identify two occurrences of missing values:
+
+1.  The vaccine_type in 2024 with a count of 7 is explicitly missing, denoted by the presence of NA in the cell where its value should be.
+2.  The counts for the Novavax vaccine in 2020 and Pfizer, Novavax vaccines in 2024, are implicitly missing, as they do not appear in the dataset at all.
+
+### `is.na()`
+
+To identify missing values we can use `is.na()` function which returns a logical vector with TRUE in the element locations that contain missing values represented by NA.
+
+```{r}
+#| eval: false
+#| classes: scrolling
+is.na(covid_vac)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+is.na(covid_vac)
+```
+
+```{=html}
+</details>
+```
+
+```{r}
+#| eval: false
+is.na(covid_vac$vaccine_type)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+is.na(covid_vac$vaccine_type)
+```
+
+```{=html}
+</details>
+```
+
+To identify the location or the number of NAs we can use the `which()` and `sum()` functions:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+which(is.na(covid_vac))
+sum(is.na(covid_vac))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+which(is.na(covid_vac))
+sum(is.na(covid_vac))
+```
+
+```{=html}
+</details>
+```
+
+### `na.omit()`
+
+To omit all rows containing missing values, we can use `na.omit()` function in base R:
+
+```{r}
+#| eval: false
+na.omit(covid_vac)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+na.omit(covid_vac)
+```
+
+```{=html}
+</details>
+```
+
+### `complete()`
+
+We can use the `complete()` function to make our dataset more complete or to make missing values explicit in tidy data:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+covid_vac |> complete(year, vaccine_type)
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+covid_vac |> complete(year, vaccine_type)
+```
+
+```{=html}
+</details>
+```
+
+This function add missing values for potential combinations of year and vaccine_type. One problem is that R assumes NA in status as one of the combinations. To fix this, we can specify the labels of status to be considered as follows:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+covid_vac |> complete(year, vaccine_type = c("Pfizer", "Moderna", "Novavax"))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+covid_vac |> complete(year, vaccine_type = c("Pfizer", "Moderna", "Novavax"))
+```
+
+```{=html}
+</details>
+```
+
+We can use the fill argument to assign the fill value:
+
+```{r}
+#| eval: false
+#| classes: scrolling
+covid_vac |> complete(year, 
+                      vaccine_type = c("Pfizer", "Moderna", "Novavax"),
+                       fill = list(count = 0))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+covid_vac |> complete(year, 
+                      vaccine_type = c("Pfizer", "Moderna", "Novavax"),
+                       fill = list(count = 0))
+```
+
+```{=html}
+</details>
+```
+
+We can use the `full_seq()` function from `tidyr` to fill out the data frame with all years from 2020 to 2024 and assign vaccination types and count values of 0 to those years and for which there was no observation.
+
+```{r}
+#| eval: false
+covid_vac |> complete(year = full_seq(year, period = 1), 
+                      vaccine_type = c("Pfizer", "Moderna", "Novavax"),
+                       fill = list(count = 0))
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+covid_vac |> complete(year = full_seq(year, period = 1), 
+                      vaccine_type = c("Pfizer", "Moderna", "Novavax"),
+                       fill = list(count = 0))
+```
+
+```{=html}
+</details>
+```
+
+### `fill()`
+
+The `fill()` function is used to fill missing values in a data frame, particularly within columns. 
+
+Let's first make missing values in the covid_vac dataset explicit and assign it to a data frame named covid_vac_comp. 
+
+```{r}
+covid_vac_comp <-  covid_vac |> 
+  complete(year = full_seq(year, period = 1), 
+           vaccine_type = c("Pfizer", "Moderna", "Novavax"))
+```
+
+We can specify the direction to fill the missing values using the argument `.direction`. Remember to specify the list of columns to fill. 
+
+```{r}
+#| eval: false
+covid_vac_comp |> fill(count, .direction = "down")
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+covid_vac_comp |> fill(count, .direction = "down")
+```
+
+```{=html}
+</details>
+```
+
+Similarly, we can fill upwards as follows:
+
+```{r}
+#| eval: false
+covid_vac_comp |> fill(count, .direction = "up")
+```
+
+```{=html}
+<details>
+<summary>Output</summary>
+```
+
+```{r}
+#| echo: false
+#| classes: scrolling
+covid_vac_comp |> fill(count, .direction = "up")
+```
+
+```{=html}
+</details>
+```
+
+Once the data is structured and organized according to tidy principles, we can begin manipulating and transforming it. The next section illustrates how this can be accomplished using the `dplyr` package from the tidyverse package suit.
