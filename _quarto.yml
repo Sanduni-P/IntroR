@@ -1,0 +1,34 @@
+url: https://sanduni-p.github.io/IntroR-tidyverse/
+project:
+  type: website
+
+website:
+  title: "Introduction to R: Exploring the tidyverse"
+  navbar:
+    left:
+      - href: index.html
+        text: Home
+      - text: Workshop
+        menu:
+        - text: "Basics of R Programming Language"
+          href: vignettes/1_Introduction.html
+        - text: "Reading and Tidying Data"
+          href: vignettes/2_Reading_tidying_data.html
+        - text: "Transforming and Joining Data"
+          href: vignettes/3_Data_Manipulation.html  
+        - text: "Visualizing Data"
+          href: vignettes/4_Visualization.html
+format:
+  html:
+    theme: 
+      - cerulean
+      - utils/css/custom.scss
+    toc: true
+    toc-expand: 1
+    toc-title: Contents
+    embed-resources: true
+    css: utils/css/custom.css
+    smooth-scroll: true
+execute: 
+  freeze: auto
+
