@@ -31,7 +31,11 @@ Before starting this course you will need to ensure that your computer is set up
 **R** is the underlying statistical computing environment. The base R system and a very large collection of packages that give you access to a huge range of statistical and analytical functionality are available from [CRAN](https://cran.r-project.org), the Comprehensive R Archive
 Network.
 
-However, using R alone is no fun. **RStudio** is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. You need to install R before you install RStudio.
+However, using R alone is no fun. **RStudio** is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. 
+
+#### Option 1: Local Installation
+
+You need to install R before you install RStudio.
 
 ```{=html}
 <details>
@@ -95,6 +99,63 @@ Linux
 - Go to the [RStudio download page](https://www.rstudio.com/products/rstudio/download/#download)
 - Under *Installers* select the version that matches your distribution, and install it with your preferred method (e.g., with Debian/Ubuntu `sudo dpkg -i   rstudio-x.yy.zzz-amd64.deb` at the terminal).
 - Once it's installed, open RStudio to make sure it works and you don't get any error messages.
+
+```{=html}
+</details>
+```
+
+#### Option 2: Using Open On Demand on Peter Mac Cluster
+
+```{=html}
+<details>
+<summary style="color: #4492B4; font-weight: 600;" >
+Requesting Access to Peter Mac Cluster
+</summary>
+```
+
+To request access to the Cluster
+
+1. Login to [SNOW](https://rchauprod.service-now.com/snow?id=pmcc_home) and create an IT Service Desk Request as shown [here](https://confluence.petermac.org.au/pages/viewpage.action?pageId=161024525).
+2. Complete the required fields, including the following information.
+ - **Request Item:** (Other)
+ - **Service:** Research Computing Cluster
+ - **Subject:** HPC Cluster Account for $first_name $last_name
+ - **Description:** Please include the name of the person who needs the account, their lab group, their manager or supervisor and what experience they have with using a HPC cluster (e.g. none, some, experienced).
+
+```{=html}
+</details>
+```
+
+```{=html}
+<details>
+<summary style="color: #4492B4; font-weight: 600;" >
+Using Open On Demand
+</summary>
+```
+
+**Open OnDemand** is a web portal that provides access to PeterMac file systems and cluster resources. It allows to view, edit, upload and download files, create, edit, submit and monitor jobs, run GUI applications, and connect via SSH, all via a web browser and with a minimal knowledge of Linux and scheduler commands. It enables running RStudio on the cluster giving you access to more memory than with our RStudio Pro server. Future work will enable it to use Jupyter notebooks on the cluster.
+
+**How to login**
+
+Requirements:
+
+- Must have a cluster account.
+- If want to use remotely:
+   - Must have remote access to Citrix or VPN.
+   - With Citrix must use Peter Mac Virtual Desktop and the Firefox inside that.
+- Username: your short cluster username not your Peter Mac computer username (i.e., first_letter_of_first_namelast_name ex: srajapaksa NOT last_namefirst_name ex: rajapaksasandun)
+- Password: Peter Mac cluster password.
+
+In a browser navigate to [https://research-cluster.petermac.org.au](https://research-cluster.petermac.org.au) and enter your login, as in:
+
+![](vignettes/images/ood_login.png)
+If you see the following Unauthorized error instead of the login prompt, you will need to use the Citrix Edge Browser. 
+
+
+![](vignettes/images/openondemand-error.png)
+You should then see in the Open OnDemand Dashboard as in:
+
+![](vignettes/images/ood.png)
 
 ```{=html}
 </details>
