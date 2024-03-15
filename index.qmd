@@ -39,7 +39,7 @@ You need to install R before you install RStudio.
 
 ```{=html}
 <details>
-<summary style="color: #4492B4; font-weight: 600;" >
+<summary style="font-weight: 600;" >
 Windows
 </summary>
 ```
@@ -65,7 +65,7 @@ Windows
 
 ```{=html}
 <details>
-<summary style="color: #4492B4; font-weight: 600;" >macOS</summary>
+<summary style="font-weight: 600;" >macOS</summary>
 ```
 
 - **If you already have R and RStudio installed:**
@@ -90,7 +90,7 @@ Windows
 
 ```{=html}
 <details>
-<summary style="color: #4492B4; font-weight: 600;" >
+<summary style="font-weight: 600;" >
 Linux
 </summary>
 ```
@@ -108,7 +108,7 @@ Linux
 
 ```{=html}
 <details>
-<summary style="color: #4492B4; font-weight: 600;" >
+<summary style="font-weight: 600;" >
 Requesting Access to Peter Mac Cluster
 </summary>
 ```
@@ -128,7 +128,7 @@ To request access to the Cluster
 
 ```{=html}
 <details>
-<summary style="color: #4492B4; font-weight: 600;" >
+<summary style="font-weight: 600;" >
 Using Open On Demand
 </summary>
 ```
