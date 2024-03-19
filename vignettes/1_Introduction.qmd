@@ -119,7 +119,7 @@ RStudio provides syntax highlighting in the Script pane, making it easier to ide
 
 ### Open a New R Script
 
-Navigate to **File → New File → R Script**, a new pane will emerge in the top-left corner. Save this blank text file as 'Week_1_tidyverse.R' in your current working directory (e.g. `Intro_R_course`).
+Navigate to **File → New File → R Script**, a new pane will emerge in the top-left corner. Save this blank text file as 'Week_1_tidyverse.R' in your current working directory (e.g. `IntroR`).
 
 ## Comments
 
@@ -156,7 +156,50 @@ We can use R as a calculator to do simple maths.
 
 More complex calculator functions are *built in* to R, which is the reason it is popular among mathematicians and statisticians. To use these functions, we need to call these functions.
 
-### Calling Functions
+## Variables
+
+A *variable* is a bit of tricky concept, but very important for understanding R. Essentially, a variable is a symbol that we use in place of another value. Usually the other value is a larger/longer form of data. We can tell R to store a lot of data, for example, in a variable named `x`. When we execute the command `x`, R returns all of the data that we stored there.
+
+For now however we'll just use a tiny data set: the number 5. To store some data in a variable, we need to use a special symbol `<-`, which in our case tells R to assign the value 5 to the variable `x`. This is called the **assignment operator**. To insert the assignment operator press <kbd>Option</kbd> + <kbd>-</kbd> (Mac) or <kbd>Alt</kbd> + <kbd>-</kbd> (Windows/Linux).
+
+Let's see how this works.
+
+Create a variable called `x`, that will contain the number 5.
+
+```{r}
+x <- 5
+```
+
+R won't return anything in the console, but note that you now have a new entry in the environment pane. The variable name is at the left (`x`) and the value that is stored in that variable, is displayed on the right (5).
+
+We can now use `x` in place of 5:
+
+```{r}
+x + 10
+```
+
+```{r}
+x * 3
+```
+
+Variables are sometimes referred to as *objects*. In R there are different conventions about how to name variables, but most importantly they:
+
+-   cannot begin with a number
+-   should begin with an alphabetical letter
+-   they are case sensitive
+-   variables can take any name, but its best to use something that makes sense to you, and will likely make sense to others who may read your code.
+
+It is wise to adapt a consistent convention for separating words in variables.
+
+For example:
+
+``` r
+# i_use_snake_case
+# other.people.use.periods
+# evenOthersUseCamelCase
+```
+
+## Calling Functions
 
 R has a large collection of built-in functions that are called like this:
 
@@ -323,49 +366,6 @@ or by using `vignette` (if the documentation is in the form of vignettes):
 
 ```{r}
 vignette(package="tidyverse")
-```
-
-## Variables
-
-A *variable* is a bit of tricky concept, but very important for understanding R. Essentially, a variable is a symbol that we use in place of another value. Usually the other value is a larger/longer form of data. We can tell R to store a lot of data, for example, in a variable named `x`. When we execute the command `x`, R returns all of the data that we stored there.
-
-For now however we'll just use a tiny data set: the number 5. To store some data in a variable, we need to use a special symbol `<-`, which in our case tells R to assign the value 5 to the variable `x`. This is called the **assignment operator**. To insert the assignment operator press <kbd>Option</kbd> + <kbd>-</kbd> (Mac) or <kbd>Alt</kbd> + <kbd>-</kbd> (Windows/Linux).
-
-Let's see how this works.
-
-Create a variable called `x`, that will contain the number 5.
-
-```{r}
-x <- 5
-```
-
-R won't return anything in the console, but note that you now have a new entry in the environment pane. The variable name is at the left (`x`) and the value that is stored in that variable, is displayed on the right (5).
-
-We can now use `x` in place of 5:
-
-```{r}
-x + 10
-```
-
-```{r}
-x * 3
-```
-
-Variables are sometimes referred to as *objects*. In R there are different conventions about how to name variables, but most importantly they:
-
--   cannot begin with a number
--   should begin with an alphabetical letter
--   they are case sensitive
--   variables can take any name, but its best to use something that makes sense to you, and will likely make sense to others who may read your code.
-
-It is wise to adapt a consistent convention for separating words in variables.
-
-For example:
-
-``` r
-# i_use_snake_case
-# other.people.use.periods
-# evenOthersUseCamelCase
 ```
 
 ## The Pipe Operator (`|>`)
