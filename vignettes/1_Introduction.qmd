@@ -69,13 +69,13 @@ The *environment pane* (located in the top right window) provides an overview of
 
 ![](images/plotting-pane.png){fig-align="center"}
 
-The *plotting pane* (located in the bottom right window) is where graphical output, such as plots and charts, is displayed when you create visualizations in R. The Plotting pane often includes tools for zooming, panning, and exporting plots, providing additional functionality for exploring and customizing your visualizations. Help Pane:
+The *plotting pane* (located in the bottom right window) is where graphical output, such as plots and charts, is displayed when you create visualizations in R. The Plotting pane often includes tools for zooming, panning, and exporting plots, providing additional functionality for exploring and customizing your visualizations. 
 
 ### Help Pane
 
 ![](images/help-pane.png){fig-align="center"}
 
-The *help pane* (located in the bottom right window) is a valuable resource for accessing documentation and information about R functions, packages, and commands. When you type a function or command in the console and press the F1 key (Mac: fn + F1) the Help pane displays relevant documentation. Additionally, you can type a keyword in the text box at the top right corner of the Help Pane.
+The *help pane* (located in the bottom right window) is a valuable resource for accessing documentation and information about R functions, packages, and commands. When you type a function or command in the console and press the <kbd>F1</kbd> key (Mac: <kbd>fn</kbd> + <kbd>F1</kbd>) the Help pane displays relevant documentation. Additionally, you can type a keyword in the text box at the top right corner of the Help Pane.
 
 ### Files Pane
 
@@ -140,7 +140,7 @@ Executing commands or *running code* is the process of submitting a command to y
 -   Select the line(s) of code using the mouse, and then click **Run** at the top right corner of the R text file.
 -   Select **Run Lines** from the Code menu.
 -   Click anywhere on the line of code and click **Run**.
--   Select the line(s) you want to run. Press <kbd>⌘</kbd> + <kbd>Return</kbd> (Mac) or <kbd>Ctrl</kbd> + <kbd>Return</kbd> (Windows/Linux) to run the selected code.
+-   Select the line(s) you want to run. Press <kbd>⌘</kbd> + <kbd>Return</kbd> (Mac) or <kbd>Ctrl</kbd> + <kbd>Enter</kbd> (Windows/Linux) to run the selected code.
 
 We suggest the third option, which is fastest. This link provides a list of useful [RStudio keyboard shortcuts](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts-in-the-RStudio-IDE) that can be beneficial when coding and navigating the RStudio IDE.
 
@@ -169,7 +169,7 @@ Let's explore using `seq()` function to create a series of numbers.
 
 Start by typing `se` and then press <kbd>Tab</kbd>. RStudio will suggest possible completions. Specify `seq()` by typing more or use the up/down arrows to select it. You'll see a helpful tooltip-type information pop up, reminding you of the function's arguments. If you need more assistance, press <kbd>F1</kbd> (Windows/linux) or <kbd>fn</kbd> + <kbd>Tab</kbd> (Mac) to access the full documentation in the help tab at the lower right.
 
-Now, type the arguments 1, 10 and press \<kbd\<Return</kbd>.
+Now, type the arguments 1, 10 and press \<kbd\<Enter</kbd>.
 
 ```{r}
 seq(1, 10)
