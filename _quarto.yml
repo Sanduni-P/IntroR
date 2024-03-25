@@ -29,6 +29,7 @@ format:
     embed-resources: true
     css: utils/css/custom.css
     smooth-scroll: true
+    df-print: kable
 execute: 
   freeze: auto
 

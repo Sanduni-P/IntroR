@@ -651,7 +651,7 @@ AirPassengers
 
 Wide format is intuitive for data entry. But it is less so for data analysis. Consider calculating the monthly mean; where would you place it? Would it be another row?
 
-Data needs to be reshaped to conform to the tidy data structure. It involves using two primary verbs (or pairs of opposites):
+Data needs to be reshaped to conform to the tidy data structure. It involves using four primary verbs (or pairs of opposites):
 
 -   Convert columns into rows (`pivot_longer()`).
 -   Convert rows into columns (`pivot_wider()`).
