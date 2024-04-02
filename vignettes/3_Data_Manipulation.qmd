@@ -16,13 +16,13 @@ Before we delve into these functions in detail, let's first explore filtering or
 
 A frequently encountered task in data manipulation is filtering or *subsetting* data to a more focused and potentially relevant subset of values. Data frames (or tibbles) can be subset using base R functions.
 
-Let's start by reading the cms_hospital_patient_satisfaction_2016_sampled.csv into a data frame using the `read_csv()` function in `readr` packgae:
+Let's start by reading the cms_hospital_patient_satisfaction_2016_sampled.csv into a data frame using the `read_csv()` function in `readr` package:
 
 ```{r}
 #| warning: false
 library(readr)
 # here the first argument is a path
-cms_data <- read_csv("data/patient_satisfaction/cms_hospital_patient_satisfaction_2016_sampled.csv")
+cms_data <- read_csv("data/cms_hospital_patient_satisfaction_2016_sampled.csv")
 # convert column names to R standard
 library(janitor) # remember to install janitor: install.packages("janitor")
 cms_data <- cms_data |> clean_names()
@@ -196,7 +196,7 @@ cms_data[2:6, c("hospital_type", "no_of_surveys", "response_rate")]
 </details>
 ```
 
-7.  To exclude a column (use - size):
+7.  To exclude a column (use -):
 
 ```{r}
 #| eval: false
@@ -513,7 +513,7 @@ This approach can be somewhat cumbersome. It requires repeated referencing of th
 
 ## Data manipulation with `dplyr' functions 
 
-You'll primarily use five key `dplyr` functions for data manipulations:
+You'll primarily use six key `dplyr` functions for data manipulations:
 
 1.  **`filter()`:** pick observations based on their values.
 2.  **`select()`:** pick variables by their names.
@@ -1795,7 +1795,6 @@ cancer_mort |>
   filter(Type == "Incidence") |> 
   group_by(Cancer_Type) |>
   summarise(tot_deaths = sum(Count)) |> 
-  ungroup() |> 
   mutate(percent_deaths = (tot_deaths * 100)/sum(tot_deaths)) 
 ```
 ```{=html}
