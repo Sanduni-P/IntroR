@@ -4737,7 +4737,7 @@ margin-bottom: 10px;
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># here the first argument is a path</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cms_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/cms_hospital_patient_satisfaction_2016_sampled.csv&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cms_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/cms_hospital_patient_satisfaction.csv&quot;</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert column names to R standard</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor) <span class="co"># remember to install janitor: install.packages(&quot;janitor&quot;)</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>cms_data <span class="ot">&lt;-</span> cms_data <span class="sc">|&gt;</span> <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -13663,6 +13663,14 @@ dbl (12): GSM1480291, GSM1480292, GSM1480293, GSM1480294, GSM1480295, GSM148...
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 50%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;">Year</th>
@@ -13675,84 +13683,84 @@ dbl (12): GSM1480291, GSM1480292, GSM1480293, GSM1480294, GSM1480295, GSM148...
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">2008</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Non-melanoma skin cancer, all types</td>
+<td style="text-align: left;">40-44</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1993</td>
 <td style="text-align: left;">Female</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Unknown primary site</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Thyroid cancer</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2004</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Chronic lymphocytic leukaemia</td>
+<td style="text-align: left;">30-34</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1976</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Laryngeal cancer</td>
 <td style="text-align: left;">0-4</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="even">
-<td style="text-align: right;">2004</td>
-<td style="text-align: left;">Persons</td>
+<tr class="odd">
+<td style="text-align: right;">1991</td>
+<td style="text-align: left;">Female</td>
 <td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Breast cancer</td>
-<td style="text-align: left;">5-9</td>
+<td style="text-align: left;">Bowel cancer</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1974</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Cervical cancer</td>
+<td style="text-align: left;">0-4</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1996</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Liver cancer</td>
-<td style="text-align: left;">85+</td>
-<td style="text-align: right;">18</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1987</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Rectal cancer</td>
-<td style="text-align: left;">30-34</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1988</td>
+<td style="text-align: right;">1972</td>
 <td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Kidney cancer</td>
-<td style="text-align: left;">85+</td>
-<td style="text-align: right;">36</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Bowel cancer</td>
+<td style="text-align: left;">80-84</td>
+<td style="text-align: right;">338</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1985</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Colon cancer</td>
-<td style="text-align: left;">80-84</td>
-<td style="text-align: right;">218</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2008</td>
 <td style="text-align: left;">Persons</td>
 <td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Rectal cancer</td>
-<td style="text-align: left;">40-44</td>
-<td style="text-align: right;">106</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1986</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Chronic lymphocytic leukaemia</td>
+<td style="text-align: left;">Oesophageal cancer</td>
 <td style="text-align: left;">10-14</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1993</td>
-<td style="text-align: left;">Persons</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: left;">Female</td>
 <td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Acute lymphoblastic leukaemia</td>
-<td style="text-align: left;">10-14</td>
-<td style="text-align: right;">8</td>
+<td style="text-align: left;">Thyroid cancer</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1968</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Bladder cancer</td>
-<td style="text-align: left;">60-64</td>
-<td style="text-align: right;">41</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Mesothelioma</td>
+<td style="text-align: left;">80-84</td>
+<td style="text-align: right;">21</td>
 </tr>
 </tbody>
 </table>
@@ -13792,844 +13800,844 @@ dbl (12): GSM1480291, GSM1480292, GSM1480293, GSM1480294, GSM1480295, GSM148...
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1994</td>
+<td style="text-align: right;">2007</td>
 <td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Acute lymphoblastic leukaemia</td>
-<td style="text-align: left;">40-44</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1983</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Acute lymphoblastic leukaemia</td>
-<td style="text-align: left;">30-34</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2009</td>
-<td style="text-align: left;">Male</td>
 <td style="text-align: left;">Incidence</td>
 <td style="text-align: left;">Acute lymphoblastic leukaemia</td>
-<td style="text-align: left;">5-9</td>
-<td style="text-align: right;">24</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1984</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Acute myeloid leukaemia</td>
-<td style="text-align: left;">15-19</td>
-<td style="text-align: right;">11</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Acute myeloid leukaemia</td>
-<td style="text-align: left;">45-49</td>
+<td style="text-align: left;">25-29</td>
 <td style="text-align: right;">10</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1971</td>
+<td style="text-align: right;">2009</td>
 <td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Acute lymphoblastic leukaemia</td>
+<td style="text-align: left;">5-9</td>
+<td style="text-align: right;">41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2001</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Acute lymphoblastic leukaemia</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1984</td>
+<td style="text-align: left;">Male</td>
 <td style="text-align: left;">Mortality</td>
 <td style="text-align: left;">Acute myeloid leukaemia</td>
-<td style="text-align: left;">20-24</td>
-<td style="text-align: right;">17</td>
+<td style="text-align: left;">55-59</td>
+<td style="text-align: right;">16</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1982</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Anal cancer</td>
-<td style="text-align: left;">40-44</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1995</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Anal cancer</td>
-<td style="text-align: left;">15-19</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1986</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Anal cancer</td>
-<td style="text-align: left;">25-29</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
 <td style="text-align: right;">1988</td>
 <td style="text-align: left;">Male</td>
 <td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Bladder cancer</td>
-<td style="text-align: left;">30-34</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2009</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Bladder cancer</td>
-<td style="text-align: left;">10-14</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1979</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Bladder cancer</td>
+<td style="text-align: left;">Acute myeloid leukaemia</td>
 <td style="text-align: left;">50-54</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1979</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Bowel cancer</td>
-<td style="text-align: left;">0-4</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2000</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Bowel cancer</td>
-<td style="text-align: left;">50-54</td>
-<td style="text-align: right;">771</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2010</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Bowel cancer</td>
-<td style="text-align: left;">25-29</td>
-<td style="text-align: right;">18</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1994</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Brain cancer</td>
-<td style="text-align: left;">20-24</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1978</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Brain cancer</td>
-<td style="text-align: left;">30-34</td>
-<td style="text-align: right;">18</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2009</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Brain cancer</td>
-<td style="text-align: left;">60-64</td>
-<td style="text-align: right;">193</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1982</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Breast cancer</td>
-<td style="text-align: left;">10-14</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1994</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Breast cancer</td>
-<td style="text-align: left;">60-64</td>
-<td style="text-align: right;">1111</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Breast cancer</td>
-<td style="text-align: left;">30-34</td>
 <td style="text-align: right;">17</td>
 </tr>
 <tr class="even">
+<td style="text-align: right;">1990</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Acute myeloid leukaemia</td>
+<td style="text-align: left;">45-49</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="odd">
 <td style="text-align: right;">1994</td>
 <td style="text-align: left;">Female</td>
 <td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Cervical cancer</td>
-<td style="text-align: left;">70-74</td>
-<td style="text-align: right;">34</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1992</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Cervical cancer</td>
-<td style="text-align: left;">10-14</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1990</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Cervical cancer</td>
-<td style="text-align: left;">0-4</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2011</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Chronic lymphocytic leukaemia</td>
-<td style="text-align: left;">55-59</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1999</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Chronic lymphocytic leukaemia</td>
-<td style="text-align: left;">60-64</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2000</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Chronic lymphocytic leukaemia</td>
-<td style="text-align: left;">30-34</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1980</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Chronic myeloid leukaemia</td>
-<td style="text-align: left;">55-59</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1992</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Chronic myeloid leukaemia</td>
-<td style="text-align: left;">5-9</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2008</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Chronic myeloid leukaemia</td>
+<td style="text-align: left;">Anal cancer</td>
 <td style="text-align: left;">40-44</td>
-<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2003</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Anal cancer</td>
+<td style="text-align: left;">85+</td>
+<td style="text-align: right;">9</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2004</td>
 <td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Anal cancer</td>
+<td style="text-align: left;">55-59</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2008</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Bladder cancer</td>
+<td style="text-align: left;">10-14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1995</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Bladder cancer</td>
+<td style="text-align: left;">25-29</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2003</td>
+<td style="text-align: left;">Female</td>
 <td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Colon cancer</td>
+<td style="text-align: left;">Bladder cancer</td>
+<td style="text-align: left;">75-79</td>
+<td style="text-align: right;">62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2000</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Bowel cancer</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1999</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Bowel cancer</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1971</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Bowel cancer</td>
+<td style="text-align: left;">35-39</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1975</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Brain cancer</td>
+<td style="text-align: left;">85+</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2001</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Brain cancer</td>
+<td style="text-align: left;">35-39</td>
+<td style="text-align: right;">44</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1992</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Brain cancer</td>
 <td style="text-align: left;">50-54</td>
 <td style="text-align: right;">58</td>
 </tr>
-<tr class="even">
-<td style="text-align: right;">1982</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Colon cancer</td>
-<td style="text-align: left;">5-9</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1997</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Colon cancer</td>
-<td style="text-align: left;">35-39</td>
-<td style="text-align: right;">21</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1991</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Head and neck excluding lip</td>
-<td style="text-align: left;">65-69</td>
-<td style="text-align: right;">165</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1976</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Head and neck excluding lip</td>
-<td style="text-align: left;">35-39</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1989</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Head and neck excluding lip</td>
-<td style="text-align: left;">5-9</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Head and neck including lip</td>
-<td style="text-align: left;">55-59</td>
-<td style="text-align: right;">12</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2008</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Head and neck including lip</td>
-<td style="text-align: left;">35-39</td>
-<td style="text-align: right;">4</td>
-</tr>
 <tr class="odd">
 <td style="text-align: right;">2004</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Head and neck including lip</td>
-<td style="text-align: left;">5-9</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2003</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Hodgkin lymphoma</td>
-<td style="text-align: left;">80-84</td>
-<td style="text-align: right;">15</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1977</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Hodgkin lymphoma</td>
-<td style="text-align: left;">45-49</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2006</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Hodgkin lymphoma</td>
-<td style="text-align: left;">65-69</td>
-<td style="text-align: right;">19</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1982</td>
 <td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Kidney cancer</td>
-<td style="text-align: left;">75-79</td>
-<td style="text-align: right;">23</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1983</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Kidney cancer</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Breast cancer</td>
 <td style="text-align: left;">10-14</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="odd">
-<td style="text-align: right;">1968</td>
+<tr class="even">
+<td style="text-align: right;">2007</td>
 <td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Breast cancer</td>
+<td style="text-align: left;">80-84</td>
+<td style="text-align: right;">741</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1991</td>
+<td style="text-align: left;">Male</td>
 <td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Kidney cancer</td>
-<td style="text-align: left;">40-44</td>
+<td style="text-align: left;">Breast cancer</td>
+<td style="text-align: left;">65-69</td>
 <td style="text-align: right;">3</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1980</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Laryngeal cancer</td>
-<td style="text-align: left;">15-19</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1997</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Laryngeal cancer</td>
-<td style="text-align: left;">10-14</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1968</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Laryngeal cancer</td>
-<td style="text-align: left;">15-19</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1994</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Liver cancer</td>
-<td style="text-align: left;">25-29</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1975</td>
+<td style="text-align: right;">1998</td>
 <td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Liver cancer</td>
-<td style="text-align: left;">80-84</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1968</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Liver cancer</td>
-<td style="text-align: left;">45-49</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1996</td>
-<td style="text-align: left;">Male</td>
 <td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Lung cancer</td>
-<td style="text-align: left;">75-79</td>
-<td style="text-align: right;">837</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1975</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Lung cancer</td>
-<td style="text-align: left;">10-14</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2000</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Lung cancer</td>
-<td style="text-align: left;">70-74</td>
-<td style="text-align: right;">1640</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1982</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Melanoma of the skin</td>
+<td style="text-align: left;">Cervical cancer</td>
 <td style="text-align: left;">55-59</td>
+<td style="text-align: right;">54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1990</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Cervical cancer</td>
+<td style="text-align: left;">70-74</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2011</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Cervical cancer</td>
+<td style="text-align: left;">15-19</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1971</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Chronic lymphocytic leukaemia</td>
+<td style="text-align: left;">70-74</td>
 <td style="text-align: right;">14</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1974</td>
-<td style="text-align: left;">Male</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Chronic lymphocytic leukaemia</td>
+<td style="text-align: left;">85+</td>
+<td style="text-align: right;">71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Chronic lymphocytic leukaemia</td>
+<td style="text-align: left;">15-19</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1997</td>
+<td style="text-align: left;">Persons</td>
 <td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Melanoma of the skin</td>
+<td style="text-align: left;">Chronic myeloid leukaemia</td>
+<td style="text-align: left;">15-19</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1985</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Chronic myeloid leukaemia</td>
 <td style="text-align: left;">35-39</td>
 <td style="text-align: right;">10</td>
 </tr>
-<tr class="odd">
-<td style="text-align: right;">1980</td>
+<tr class="even">
+<td style="text-align: right;">1989</td>
 <td style="text-align: left;">Female</td>
 <td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Melanoma of the skin</td>
-<td style="text-align: left;">75-79</td>
-<td style="text-align: right;">15</td>
+<td style="text-align: left;">Chronic myeloid leukaemia</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">8</td>
 </tr>
-<tr class="even">
-<td style="text-align: right;">2006</td>
+<tr class="odd">
+<td style="text-align: right;">2000</td>
 <td style="text-align: left;">Persons</td>
 <td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Mesothelioma</td>
-<td style="text-align: left;">20-24</td>
+<td style="text-align: left;">Colon cancer</td>
+<td style="text-align: left;">45-49</td>
+<td style="text-align: right;">87</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Colon cancer</td>
+<td style="text-align: left;">55-59</td>
+<td style="text-align: right;">763</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1980</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Colon cancer</td>
+<td style="text-align: left;">55-59</td>
+<td style="text-align: right;">226</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1978</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Head and neck excluding lip</td>
+<td style="text-align: left;">10-14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1982</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Head and neck excluding lip</td>
+<td style="text-align: left;">50-54</td>
+<td style="text-align: right;">71</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2000</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Head and neck excluding lip</td>
+<td style="text-align: left;">15-19</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2001</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Head and neck including lip</td>
+<td style="text-align: left;">75-79</td>
+<td style="text-align: right;">265</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2004</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Head and neck including lip</td>
+<td style="text-align: left;">75-79</td>
+<td style="text-align: right;">120</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1974</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Head and neck including lip</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">99</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1983</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Hodgkin lymphoma</td>
+<td style="text-align: left;">35-39</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1969</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Hodgkin lymphoma</td>
+<td style="text-align: left;">65-69</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1997</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Hodgkin lymphoma</td>
+<td style="text-align: left;">10-14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2008</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Kidney cancer</td>
+<td style="text-align: left;">75-79</td>
+<td style="text-align: right;">99</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1982</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Kidney cancer</td>
+<td style="text-align: left;">45-49</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2009</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Kidney cancer</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1987</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Laryngeal cancer</td>
+<td style="text-align: left;">30-34</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1985</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Laryngeal cancer</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2005</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Laryngeal cancer</td>
+<td style="text-align: left;">25-29</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2000</td>
 <td style="text-align: left;">Persons</td>
 <td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Mesothelioma</td>
+<td style="text-align: left;">Liver cancer</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1998</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Liver cancer</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1992</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Liver cancer</td>
+<td style="text-align: left;">15-19</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1971</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Lung cancer</td>
 <td style="text-align: left;">55-59</td>
-<td style="text-align: right;">39</td>
+<td style="text-align: right;">72</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Lung cancer</td>
+<td style="text-align: left;">85+</td>
+<td style="text-align: right;">327</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1990</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Lung cancer</td>
+<td style="text-align: left;">55-59</td>
+<td style="text-align: right;">396</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1994</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Melanoma of the skin</td>
+<td style="text-align: left;">15-19</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1977</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Melanoma of the skin</td>
+<td style="text-align: left;">10-14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1999</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Melanoma of the skin</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1993</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Mesothelioma</td>
+<td style="text-align: left;">55-59</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1988</td>
 <td style="text-align: left;">Persons</td>
 <td style="text-align: left;">Incidence</td>
 <td style="text-align: left;">Mesothelioma</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">37</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2008</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Mesothelioma</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2010</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Myeloma</td>
+<td style="text-align: left;">45-49</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1984</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Myeloma</td>
+<td style="text-align: left;">25-29</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1985</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Myeloma</td>
+<td style="text-align: left;">75-79</td>
+<td style="text-align: right;">46</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1984</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Non-Hodgkin lymphoma</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">103</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1994</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Non-Hodgkin lymphoma</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1992</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Non-Hodgkin lymphoma</td>
+<td style="text-align: left;">80-84</td>
+<td style="text-align: right;">166</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1985</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Non-melanoma skin cancer, all types</td>
+<td style="text-align: left;">10-14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2001</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Non-melanoma skin cancer, all types</td>
 <td style="text-align: left;">0-4</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1996</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Myeloma</td>
-<td style="text-align: left;">70-74</td>
-<td style="text-align: right;">49</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1973</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Myeloma</td>
-<td style="text-align: left;">70-74</td>
-<td style="text-align: right;">42</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1984</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Myeloma</td>
-<td style="text-align: left;">55-59</td>
-<td style="text-align: right;">24</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1985</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Non-Hodgkin lymphoma</td>
-<td style="text-align: left;">75-79</td>
-<td style="text-align: right;">215</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1982</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Non-Hodgkin lymphoma</td>
-<td style="text-align: left;">15-19</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1990</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Non-Hodgkin lymphoma</td>
-<td style="text-align: left;">5-9</td>
-<td style="text-align: right;">15</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Non-melanoma skin cancer, all types</td>
-<td style="text-align: left;">80-84</td>
-<td style="text-align: right;">46</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2009</td>
+<td style="text-align: right;">2007</td>
 <td style="text-align: left;">Persons</td>
 <td style="text-align: left;">Mortality</td>
 <td style="text-align: left;">Non-melanoma skin cancer, all types</td>
 <td style="text-align: left;">35-39</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="odd">
-<td style="text-align: right;">1989</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Non-melanoma skin cancer, all types</td>
-<td style="text-align: left;">85+</td>
-<td style="text-align: right;">50</td>
-</tr>
 <tr class="even">
-<td style="text-align: right;">2001</td>
-<td style="text-align: left;">Male</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">Female</td>
 <td style="text-align: left;">Incidence</td>
 <td style="text-align: left;">Non-melanoma skin cancer, rare types</td>
-<td style="text-align: left;">45-49</td>
-<td style="text-align: right;">19</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">2008</td>
+<td style="text-align: right;">2006</td>
 <td style="text-align: left;">Persons</td>
 <td style="text-align: left;">Incidence</td>
 <td style="text-align: left;">Non-melanoma skin cancer, rare types</td>
-<td style="text-align: left;">55-59</td>
-<td style="text-align: right;">46</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">6</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2008</td>
-<td style="text-align: left;">Male</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: left;">Persons</td>
 <td style="text-align: left;">Incidence</td>
 <td style="text-align: left;">Non-melanoma skin cancer, rare types</td>
-<td style="text-align: left;">70-74</td>
-<td style="text-align: right;">64</td>
+<td style="text-align: left;">0-4</td>
+<td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1993</td>
+<td style="text-align: right;">1994</td>
 <td style="text-align: left;">Male</td>
 <td style="text-align: left;">Mortality</td>
 <td style="text-align: left;">Oesophageal cancer</td>
-<td style="text-align: left;">45-49</td>
-<td style="text-align: right;">16</td>
+<td style="text-align: left;">0-4</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1990</td>
 <td style="text-align: left;">Persons</td>
 <td style="text-align: left;">Mortality</td>
 <td style="text-align: left;">Oesophageal cancer</td>
-<td style="text-align: left;">25-29</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">85+</td>
+<td style="text-align: right;">56</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">2004</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
+<td style="text-align: right;">1994</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
 <td style="text-align: left;">Oesophageal cancer</td>
 <td style="text-align: left;">85+</td>
-<td style="text-align: right;">137</td>
+<td style="text-align: right;">61</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1987</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Ovarian cancer</td>
-<td style="text-align: left;">50-54</td>
-<td style="text-align: right;">50</td>
-</tr>
-<tr class="odd">
 <td style="text-align: right;">1988</td>
 <td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Ovarian cancer</td>
+<td style="text-align: left;">85+</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1982</td>
+<td style="text-align: left;">Female</td>
 <td style="text-align: left;">Incidence</td>
 <td style="text-align: left;">Ovarian cancer</td>
-<td style="text-align: left;">30-34</td>
-<td style="text-align: right;">28</td>
+<td style="text-align: left;">5-9</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1989</td>
+<td style="text-align: right;">1983</td>
 <td style="text-align: left;">Female</td>
 <td style="text-align: left;">Mortality</td>
 <td style="text-align: left;">Ovarian cancer</td>
-<td style="text-align: left;">70-74</td>
-<td style="text-align: right;">97</td>
+<td style="text-align: left;">65-69</td>
+<td style="text-align: right;">74</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Persons</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: left;">Female</td>
 <td style="text-align: left;">Incidence</td>
 <td style="text-align: left;">Pancreatic cancer</td>
-<td style="text-align: left;">20-24</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1995</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Pancreatic cancer</td>
-<td style="text-align: left;">45-49</td>
-<td style="text-align: right;">43</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1999</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Pancreatic cancer</td>
-<td style="text-align: left;">0-4</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1996</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Prostate cancer</td>
-<td style="text-align: left;">45-49</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1996</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Prostate cancer</td>
-<td style="text-align: left;">20-24</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1973</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Prostate cancer</td>
 <td style="text-align: left;">75-79</td>
-<td style="text-align: right;">180</td>
+<td style="text-align: right;">177</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1972</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Pancreatic cancer</td>
+<td style="text-align: left;">30-34</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1995</td>
+<td style="text-align: right;">2006</td>
 <td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Pancreatic cancer</td>
+<td style="text-align: left;">65-69</td>
+<td style="text-align: right;">236</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2011</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Prostate cancer</td>
+<td style="text-align: left;">55-59</td>
+<td style="text-align: right;">55</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1991</td>
+<td style="text-align: left;">Male</td>
 <td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Rectal cancer</td>
+<td style="text-align: left;">Prostate cancer</td>
 <td style="text-align: left;">40-44</td>
-<td style="text-align: right;">95</td>
+<td style="text-align: right;">8</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1975</td>
 <td style="text-align: left;">Male</td>
 <td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Rectal cancer</td>
-<td style="text-align: left;">40-44</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: left;">Prostate cancer</td>
+<td style="text-align: left;">45-49</td>
+<td style="text-align: right;">6</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1984</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Incidence</td>
 <td style="text-align: left;">Rectal cancer</td>
-<td style="text-align: left;">40-44</td>
-<td style="text-align: right;">14</td>
+<td style="text-align: left;">80-84</td>
+<td style="text-align: right;">461</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1991</td>
+<td style="text-align: right;">2003</td>
 <td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Stomach cancer</td>
-<td style="text-align: left;">45-49</td>
-<td style="text-align: right;">20</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Rectal cancer</td>
+<td style="text-align: left;">55-59</td>
+<td style="text-align: right;">308</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">1995</td>
 <td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Rectal cancer</td>
+<td style="text-align: left;">20-24</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1975</td>
+<td style="text-align: left;">Male</td>
 <td style="text-align: left;">Mortality</td>
 <td style="text-align: left;">Stomach cancer</td>
-<td style="text-align: left;">0-4</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1992</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Stomach cancer</td>
-<td style="text-align: left;">40-44</td>
-<td style="text-align: right;">18</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1991</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Testicular cancer</td>
-<td style="text-align: left;">55-59</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1987</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Testicular cancer</td>
-<td style="text-align: left;">55-59</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1991</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Testicular cancer</td>
-<td style="text-align: left;">85+</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1985</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Thyroid cancer</td>
-<td style="text-align: left;">75-79</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1972</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Thyroid cancer</td>
-<td style="text-align: left;">10-14</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1996</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Thyroid cancer</td>
-<td style="text-align: left;">45-49</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1991</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Tongue cancer</td>
-<td style="text-align: left;">15-19</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Tongue cancer</td>
-<td style="text-align: left;">60-64</td>
-<td style="text-align: right;">44</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2002</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Tongue cancer</td>
-<td style="text-align: left;">15-19</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2005</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Unknown primary site</td>
-<td style="text-align: left;">0-4</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2007</td>
-<td style="text-align: left;">Male</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Unknown primary site</td>
-<td style="text-align: left;">40-44</td>
-<td style="text-align: right;">12</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1971</td>
-<td style="text-align: left;">Persons</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Unknown primary site</td>
-<td style="text-align: left;">25-29</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2003</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Incidence</td>
-<td style="text-align: left;">Uterine cancer</td>
-<td style="text-align: left;">55-59</td>
-<td style="text-align: right;">260</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1989</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">Mortality</td>
-<td style="text-align: left;">Uterine cancer</td>
 <td style="text-align: left;">50-54</td>
-<td style="text-align: right;">7</td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1991</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Stomach cancer</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">133</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2008</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Stomach cancer</td>
+<td style="text-align: left;">5-9</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">1974</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Testicular cancer</td>
+<td style="text-align: left;">70-74</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1993</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Testicular cancer</td>
+<td style="text-align: left;">65-69</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2008</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Testicular cancer</td>
+<td style="text-align: left;">35-39</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1987</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Thyroid cancer</td>
+<td style="text-align: left;">40-44</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1994</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Thyroid cancer</td>
+<td style="text-align: left;">65-69</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2000</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Thyroid cancer</td>
+<td style="text-align: left;">35-39</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1975</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Tongue cancer</td>
+<td style="text-align: left;">80-84</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1995</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Tongue cancer</td>
+<td style="text-align: left;">40-44</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1983</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Tongue cancer</td>
+<td style="text-align: left;">60-64</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1973</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Unknown primary site</td>
+<td style="text-align: left;">55-59</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1974</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Unknown primary site</td>
+<td style="text-align: left;">80-84</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1968</td>
+<td style="text-align: left;">Persons</td>
+<td style="text-align: left;">Mortality</td>
+<td style="text-align: left;">Unknown primary site</td>
+<td style="text-align: left;">65-69</td>
+<td style="text-align: right;">63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2007</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Uterine cancer</td>
+<td style="text-align: left;">80-84</td>
+<td style="text-align: right;">135</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2005</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: left;">Incidence</td>
+<td style="text-align: left;">Uterine cancer</td>
+<td style="text-align: left;">35-39</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1997</td>
 <td style="text-align: left;">Female</td>
 <td style="text-align: left;">Mortality</td>
 <td style="text-align: left;">Uterine cancer</td>
-<td style="text-align: left;">25-29</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">40-44</td>
+<td style="text-align: right;">2</td>
 </tr>
 </tbody>
 </table>
