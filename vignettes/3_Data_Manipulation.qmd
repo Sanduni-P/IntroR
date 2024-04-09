@@ -22,7 +22,7 @@ Let's start by reading the cms_hospital_patient_satisfaction_2016_sampled.csv in
 #| warning: false
 library(readr)
 # here the first argument is a path
-cms_data <- read_csv("data/cms_hospital_patient_satisfaction_2016_sampled.csv")
+cms_data <- read_csv("data/cms_hospital_patient_satisfaction.csv")
 # convert column names to R standard
 library(janitor) # remember to install janitor: install.packages("janitor")
 cms_data <- cms_data |> clean_names()
