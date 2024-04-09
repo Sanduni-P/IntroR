@@ -4,7 +4,11 @@ title: "Visualizing Data"
 
 ## Overview
 
-`ggplot2` package simplifies the creation of plots using data frames. It offers a streamlined interface for defining variables to plot, configuring their display, and adjusting visual attributes. Consequently, adapting to changes in the data or transitioning between plot types requires only minimal modifications. This feature facilitates the creation of high-quality plots suitable for publication with minimal manual adjustments.
+`ggplot2` package simplifies the creation of plots using data frames. This is the nest step in the tidyverse workflow.
+
+![](images/life-cycle-4.png){fig-align="center"}
+
+This package offers a streamlined interface for defining variables to plot, configuring their display, and adjusting visual attributes. Consequently, adapting to changes in the data or transitioning between plot types requires only minimal modifications. This feature facilitates the creation of high-quality plots suitable for publication with minimal manual adjustments.
 
 `ggplot` prefers data in the "long" format, where each dimension occupies a column and each observation corresponds to a row. Structuring data in this manner (discussed previously) enhances efficiency when generating figures with `ggplot`.
 
