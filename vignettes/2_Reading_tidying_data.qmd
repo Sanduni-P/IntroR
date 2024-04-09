@@ -123,7 +123,7 @@ The first argument of the `read_csv()` function takes the path to the file (or a
 ```{r}
 #| eval: false
 # here the first argument is a path
-cms_data <- read_csv("data/patient_satisfaction/cms_hospital_patient_satisfaction_2016_sampled.csv")
+cms_data <- read_csv("data/cms_hospital_patient_satisfaction.csv")
 ```
 
 ```{=html}
@@ -133,7 +133,7 @@ cms_data <- read_csv("data/patient_satisfaction/cms_hospital_patient_satisfactio
 
 ```{r}
 #| echo: false
-cms_data <- read_csv("data/patient_satisfaction/cms_hospital_patient_satisfaction_2016_sampled.csv")
+cms_data <- read_csv("data/cms_hospital_patient_satisfaction.csv")
 ```
 
 ```{=html}
