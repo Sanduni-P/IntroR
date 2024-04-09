@@ -4,7 +4,7 @@ title: "Visualizing Data"
 
 ## Overview
 
-`ggplot2` package simplifies the creation of plots using data frames. This is the nest step in the tidyverse workflow.
+`ggplot2` package simplifies the creation of plots using data frames. This is the next step in the tidyverse workflow.
 
 ![](images/life-cycle-4.png){fig-align="center"}
 
