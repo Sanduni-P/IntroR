@@ -1299,7 +1299,7 @@ The `data` element is just the metabric tibble that we provided to the
 `ggplot()` function.
 
 ```{r}
-plot$data
+plot$data |> head()
 ```
 
 This `plot` list object is really only a specification for how ggplot2 should
