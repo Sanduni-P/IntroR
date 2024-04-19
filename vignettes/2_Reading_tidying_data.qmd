@@ -352,7 +352,7 @@ colnames(cms_data)
 
 The `$` symbol allows access to individual columns. To display 'Hospital Type' column:
 
-```{r}
+```{r error=TRUE}
 #| error: true
 cms_data$Hospital Type
 ```
