@@ -1265,3 +1265,497 @@ ggsave("integrative_cluster.pdf", width = 20, height = 12, units = "cm")
 You can also pass in a plot object you have created instead of using the last
 plot displayed. See the help page (`?ggsave`) for more details.
 
+## The ggplot object -- a peek under the hood 
+
+Let's build a ggplot2 plot up in stages to understand what's really going on.
+
+```{r}
+plot <- metabric |> ggplot()
+```
+
+What is the plot object we've just created?
+
+```{r}
+typeof(plot)
+```
+
+```{r}
+length(plot)
+```
+
+The plot object is a list containing 11 elements. It's actually a special type of list.
+
+```{r}
+class(plot)
+```
+
+What are the 11 things in the list?
+
+```{r}
+names(plot)
+```
+
+The `data` element is just the metabric tibble that we provided to the
+`ggplot()` function.
+
+```{r}
+plot$data
+```
+
+This `plot` list object is really only a specification for how ggplot2 should
+create the plot. ggplot2 only renders the plot when we ask it to by printing it
+out to the screen by typing `print(plot)` or simply just `plot`.
+
+We haven't added any layers yet so what does our plot look like at this point?
+
+```{r}
+plot
+```
+
+`ggplot2` doesn't know what to plot yet as we haven't added a layer (geom).
+
+```{r}
+plot$mapping
+plot$layers
+```
+
+Lets add an aesthetic mapping.
+
+```{r}
+plot <- metabric |> ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC))
+plot
+```
+
+`ggplot2` has automatically added scales for x and y based on the ranges of values for the Nottingham prognostic index and ESR1 expression. Still nothing has been plotted as we haven't yet specified the type of plot (geom) to add as a layer.
+
+```{r}
+plot$mapping
+plot$layers
+```
+
+Finally, let's add a `geom_point` and `geom_smooth` layers to create a scatter plot.
+
+```{r}
+plot <- plot + 
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") 
+plot
+```
+
+```{r}
+plot$layers
+```
+
+We touched on statistical transformations earlier. The `stat` associated with a
+`geom_point` is `stat_identity` which leaves values unchanged. In the case of a scatter plot, we already have the x and y values -- they don't need to be transformed, just plotted on the x and y axes. On the other hand, the `stat` associated with a `geom_smooth` is `stat_smooth` which uses a linear function for smoothing. 
+
+## Customizing Plots - continued
+
+### Scales
+
+One of the components of the plot is called `scales`. `ggplot2` automatically
+adds default scales behind the scene equivalent to the following:
+
+```{r}
+plot <- metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_x_continuous() +
+  scale_y_continuous() +
+  scale_colour_discrete()
+```
+
+Note that we have three aesthetics and ggplot2 adds a scale for each.
+
+```{r}
+plot$mapping
+```
+
+The x and y variables (`NPI` and `ESR1`) are continuous so `ggplot2` adds a
+continuous scale for each. `ER_IHC` is a discrete variable in this case so
+`ggplot2` adds a discrete scale for colour.
+
+Generalizing, the scales that are required follow the naming scheme:
+
+```{r}
+#| eval: false
+scale_<NAME_OF_AESTHETIC>_<NAME_OF_SCALE>
+```
+
+Look at the help page for `scale_y_continuous` to see what we can change about
+the y-axis scale.
+
+First we'll change the breaks, i.e. where `ggplot2` puts ticks and numeric
+labels, on the y axis.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_y_continuous(breaks = seq(5, 15, by = 2.5))
+```
+
+`seq()` is a useful function for generating regular sequences of numbers. In
+this case we wanted numbers from 5 to 15 going up in steps of 2.5.
+
+```{r}
+seq(5, 15, by = 2.5)
+```
+
+We could do the same thing for the x axis using `scale_x_continuous()`.
+
+We can also adjust the extents of the x or y axis.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_y_continuous(breaks = seq(5, 15, by = 2.5), limits = c(4, 12))
+```
+
+Here, just for demonstration purposes, we set the upper limit to be less than
+the largest values of ESR1 expression and `ggplot2` warned us that some rows have been removed from the plot.
+
+We can change the minor breaks, e.g. to add more lines that act as guides. These
+are shown as thin white lines when using the default theme.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_y_continuous(
+    breaks = seq(5, 12.5, by = 2.5), 
+    minor_breaks = seq(5, 13.5, 0.5), 
+    limits = c(5, 13.5))
+```
+
+Or we can remove the minor breaks entirely.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_y_continuous(
+    breaks = seq(6, 14, by = 2), 
+    minor_breaks = NULL, 
+    limits = c(5, 13.5))
+```
+
+Similarly we could remove all breaks entirely.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_y_continuous(breaks = NULL)
+```
+
+A more typical scenario would be to keep the breaks, because we want to display
+the ticks and their lables, but remove the grid lines. Somewhat confusingly the
+position of grid lines are controlled by a scale but preventing these from being
+displayed requires changing the theme. The theme controls the way in which
+non-data components are displayed -- we'll look at how these can be customized
+later. For now, though, here's an example of turning off the display of all
+grid lines for major and minor breaks for both axes.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_y_continuous(breaks = seq(4, 14, by = 2), limits = c(4, 14)) +
+  theme(panel.grid = element_blank())
+```
+
+By default, the scales are expanded by 5% of the range on either side. We can
+add or reduce the space as follows.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = expansion(mult = 0.01)) +
+  scale_y_continuous(expand = expansion(mult = 0.25))
+```
+
+Here we only added 1% (0.01) of the range of NPI values on either side along the x axis but we added 25% (0.25) of the range of ESR1 expression on either side along the y axis.
+
+We can move the axis to the other side of the plot –- not sure why you’d want to
+do this but with `ggplot2` just about anything is possible.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(position = "top")
+```
+
+### Colours
+
+The colour asthetic is used with a categorical variable, `ER_IHC`, in the
+scatter plots we've been customizing. The default colour scale used by `ggplot2`
+for categorical variables is `scale_colour_discrete`. We can manually set the
+colours we wish to use using `scale_colour_manual` instead.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_colour_manual(values = c("dodgerblue2", "firebrick2"))
+```
+
+Setting colours manually is ok when we only have two or three categories but
+when we have a larger number it would be handy to be able to choose from a
+selection of carefully-constructed colour palettes. Helpfully, `ggplot2` provides access to the [ColorBrewer](http://colorbrewer2.org) palettes through the functions `scale_colour_brewer()` and `scale_fill_brewer()`.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = THREEGENE)) + 
+  geom_point(size = 0.6, alpha = 0.5, na.rm = TRUE) +
+  scale_colour_brewer(palette = "Set1")
+```
+
+Look at the help page for `scale_colour_brewer` to see what other colour
+palettes are available and visit the [ColorBrewer](http://colorbrewer2.org)
+website to see what these look like.
+
+Interestingly, you can set other attributes other than just the colours at the
+same time.
+
+```{r}
+metabric |> 
+  ggplot(mapping = aes(x = NPI, y = ESR1, colour = ER_IHC)) +
+  geom_point(size = 0.6, alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  scale_colour_manual(
+    values = c("dodgerblue2", "firebrick2"), 
+    labels = c("ER-negative", "ER-positive")) +
+  labs(colour = NULL)  # remove legend title for colour now that the labels are self-explanatory
+```
+
+We have applied our own set of mappings from levels in the data to aesthetic
+values.
+
+For continuous variables we may wish to be able to change the colours used in the colour gradient. To demonstrate this we'll correct the Nottingham prognostic index (NPI) values and use this to colour points in the scatter plot of ESR1 vs GATA3 expression on a continuous scale.
+
+```{r}
+# Nottingham_prognostic_index is incorrectly calculated in the data downloaded from cBioPortal
+metabric <- metabric |> 
+  mutate(NPI = 0.02 * TUMOR_SIZE + LYMPH_NODES_EXAMINED_POSITIVE + GRADE)
+
+metabric |> 
+  filter(!is.na(NPI)) |> 
+  ggplot(mapping = aes(x = GATA3, y = ESR1, colour = NPI)) +
+  geom_point(size = 0.5)
+```
+
+Higher NPI scores correspond to worse prognosis and lower chance of 5 year
+survival. We'll emphasize those points on the scatter plot by adjusting our
+colour scale.
+
+```{r}
+metabric |> 
+  filter(!is.na(NPI)) |> 
+  ggplot(mapping = aes(x = GATA3, y = ESR1, colour = NPI)) +
+  geom_point(size = 0.75) +
+  scale_colour_gradient(low = "white", high = "firebrick2")
+```
+
+In some cases it might make sense to specify two colour gradients either side
+of a mid-point.
+
+```{r}
+metabric |> 
+  filter(!is.na(NPI)) |> 
+  ggplot(mapping = aes(x = GATA3, y = ESR1, colour = NPI)) +
+  geom_point(size = 0.75) +
+  scale_colour_gradient2(
+    low = "dodgerblue1", 
+    mid = "grey90", 
+    high = "firebrick1", 
+    midpoint = 4.5)
+```
+
+As before we can override the default labels and other aspects of the colour
+scale within the scale function.
+
+```{r scatter_plot_16}
+metabric |> 
+  filter(!is.na(NPI)) |> 
+  ggplot(mapping = aes(x = GATA3, y = ESR1, colour = NPI)) +
+  geom_point(size = 0.5) +
+  scale_colour_gradient(
+    low = "lightblue", high = "darkblue",
+    name = "NPI Values",
+    breaks = 2:6,
+    limits = c(1.5, 6.5)
+  )
+```
+
+
+### Themes
+
+Themes can be used to customize non-data components of a plot. Let's create a
+plot showing the expression of estrogen receptor alpha (ESR1) for each of the
+Integrative cluster breast cancer subtypes.
+
+```{r message = FALSE}
+# read in the METABRIC data, convert the INTCLUST variable into a
+# categorical variable with the levels in the correct order, and select just
+# the columns and rows we're going to use
+metabric <- metabric |> 
+  mutate(INTCLUST = factor(INTCLUST, levels = c("1", "2", "3", "4ER-", "4ER+", "5", "6", "7", "8", "9", "10"))) |> 
+  mutate(THREEGENE = replace_na(THREEGENE, "Unclassified")) |> 
+  select(PATIENT_ID, ER_IHC, PR_STATUS, THREEGENE, INTCLUST, ESR1) %>%
+  filter(!is.na(INTCLUST), !is.na(ESR1))
+```
+
+```{r}
+# plot the ESR1 expression for each integrative cluster
+plot <- metabric |> ggplot() +
+  geom_boxplot(aes(x = INTCLUST, y = ESR1, fill = INTCLUST)) +
+  labs(x = "Integrative cluster", y = "ESR1 expression")
+plot
+```
+
+The default theme has the characteristic grey background which isn't
+particularly suitable for printing on paper. We can change to one of a number
+of alternative themes available in the ggplot2 package, e.g. the black and
+white theme.
+
+```{r}
+plot + theme_bw()
+```
+
+Each of these themes is really just a collection of attributes relating to how
+various non-data elements of the plot will be displayed. We can override any of
+these individual settings using the `theme()` function. A look at the help page
+(`?theme`) shows that there are a very large number of settings that you can
+change. The following example demonstrates a few of these.
+
+```{r}
+plot +
+  theme_bw() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    legend.position = "none"
+  )
+```
+
+Here's another example that also involves customizing the labels, scales and
+colours.
+
+```{r}
+metabric |> ggplot() +
+  geom_bar(aes(x = THREEGENE, fill = ER_IHC)) +
+  scale_y_continuous(limits = c(0, 700), breaks = seq(0, 700, 100), expand = expand_scale(mult = 0)) +
+  scale_fill_manual(values = c("firebrick2", "dodgerblue2")) +
+  labs(x = NULL, y = "samples", fill = "ER status") +
+  theme_bw() +
+  theme(
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+    axis.line.y = element_line(),
+    axis.ticks.length.y = unit(0.2, "cm"),
+    legend.position = "bottom"
+  )
+```
+
+The ggthemes package contains some extra themes and might be fun to check out.
+Here's an example of a plot that uses the `theme_gdocs` theme that resembles the
+default look of charts in Google Docs.
+
+```{r}
+library(ggthemes)
+metabric |> 
+  filter(THREEGENE == "HER2+") |> 
+  ggplot(aes(x = PR_STATUS, y = ESR1)) +
+  geom_boxplot() +
+  geom_jitter(aes(colour = PR_STATUS), width = 0.25, alpha = 0.4, show.legend = FALSE) +
+  scale_colour_brewer(palette = "Set1") +
+  labs(x = "PR status", y = "ESR1 expression") +
+  theme_gdocs()
+```
+
+### Position adjustments
+
+All geoms in `ggplot2` have a position adjustment that can be set using the
+`position` argument. This has different effects for different types of plot but
+essentially this resolves how overlapping geoms are displayed.
+
+For example, let's consider the stacked bar plot we created earlier showing the
+numbers of patients in each of the 3-gene classifications subdivided by ER
+status. The default position value for `geom_bar()` is "stack" which is why the
+plot is shown as a stacked bar chart. An alternative way of representing these
+data would be to show separate bars for each ER status side-by-side by setting
+`position = "dodge"`.
+
+```{r }
+metabric |> ggplot() +
+  geom_bar(aes(x = THREEGENE, fill = ER_IHC), position = "dodge") +
+  scale_y_continuous(limits = c(0, 700), breaks = seq(0, 700, 100), expand = expand_scale(mult = 0)) +
+  scale_fill_manual(values = c("firebrick2", "dodgerblue2")) +
+  labs(x = NULL, y = "samples", fill = "ER status") +
+  theme_bw() +
+  theme(
+    panel.border = element_blank(),
+    panel.grid = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+    axis.line.y = element_line(),
+    axis.ticks.length.y = unit(0.2, "cm")
+  )
+```
+
+Another position adjustment we've come across is `geom_jitter()`, which is just
+a convenient shortcut for `geom_point(position = "jitter")`. A variation on this,
+`position_jitterdodge()`, comes in handy when we are overlaying points on top of
+a box plot. We show an example of just such a plot in which first use
+`postion = "jitter"`.
+
+```{r box_plot_8}
+metabric |> 
+  ggplot( aes(x = THREEGENE, y = ESR1, colour = PR_STATUS)) +
+  geom_boxplot() +
+  geom_point(position = "jitter", size = 0.5, alpha = 0.3) +
+  labs(x = "3-gene classification", y = "ESR1 expression", colour = "PR status") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+    axis.ticks.x = element_blank()
+  )
+```
+
+The PR-negative and PR-positive points have distinct colours but are overlapping
+in a way that is aesthetically displeasing. What we want is for the points to
+have both jitter and to be dodged in the same way as the boxes. With
+`position_jitterdodge()` we get a better looking plot.
+
+```{r box_plot_9}
+metabric |> 
+  ggplot( aes(x = THREEGENE, y = ESR1, colour = PR_STATUS)) +
+  geom_boxplot() +
+  geom_point(position = position_jitterdodge(), size = 0.5, alpha = 0.3) +
+  labs(x = "3-gene classification", y = "ESR1 expression", colour = "PR status") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+    axis.ticks.x = element_blank()
+  )
+```
