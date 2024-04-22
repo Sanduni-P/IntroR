@@ -152,8 +152,8 @@ head(patient_sample_data)
 #| echo: false
 #| classes: scrolling
 #| message: false
-mrna <- read_tsv("data/brca_metabric/data_mrna_illumina_microarray.txt") 
-mrna_filtered <- mrna |>  filter(Hugo_Symbol %in% c("ESR1", "ERBB2", "PGR", "TP53", "PIK3CA", "GATA3", "FOXA1", "MLPH")) 
+mrna_filtered <- read_tsv("data/brca_metabric/data_mrna_illumina_microarray_short.txt") 
+#mrna_filtered <- mrna |>  filter(Hugo_Symbol %in% c("ESR1", "ERBB2", "PGR", "TP53", "PIK3CA", "GATA3", "FOXA1", "MLPH")) 
 ```
 
 **2. Remove columns from the other study, specifically those with sample IDs in the form "MTS-XXXX" and the Entrez ID column.**
