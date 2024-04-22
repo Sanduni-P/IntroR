@@ -1,0 +1,475 @@
+---
+title: "Exploring the Metabric Dataset"
+---
+
+This week's session is structured as a tutorial, allowing you to actively engage with the tasks outlined below. We will spend time exploring these tasks during the session, followed by a collaborative discussion to address any challenges encountered. The concepts we've covered thus far will be revisited and applied extensively.
+
+We will be utilizing the metabric dataset, which should now be somewhat familiar to everyone. Our workflow will involve downloading the original data from cBioPortal, reading it into our R session, and then proceeding to preprocess and transform the data to better suit our analytical needs. This results in a data frame named metabric.
+
+The following table illustartes the column names and descriptions of the metabric data frame we will be using for subsequent analysis. 
+
+```{=html}
+<table class="no-spacing" cellspacing="0" >
+  <caption>Description of column names in the metabric dataset</caption>
+  <thead>
+    <tr>
+      <th>Column Name</th>
+      <th style="padding-left: 120px; " >Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Patient_Id</td>	<td>#Identifier to uniquely specify a patient.</td></tr>
+    <tr><td>Lymph_Nodes_Examined_Positive</td>	<td>Number of lymphnodes positive</td></tr>
+    <tr><td>Npi</td>	<td>Nottingham prognostic index</td></tr>
+    <tr><td>Cellularity</td>	<td>Tumor Content</td></tr>
+    <tr><td>Chemotherapy</td>	<td>Chemotherapy.</td></tr>
+    <tr><td>Cohort</td>	<td>Cohort</td></tr>
+    <tr><td>Er_Ihc</td>	<td>ER status measured by IHC</td></tr>
+    <tr><td>Her2_Snp6</td>	<td>HER2 status measured by SNP6</td></tr>
+    <tr><td>Intclust</td>	<td>Integrative Cluster</td></tr>
+    <tr><td>Age_At_Diagnosis</td>	<td>Age at Diagnosis</td></tr>
+    <tr><td>Os_Months</td>	<td>Overall survival in months since initial diagonosis.</td></tr>
+    <tr><td>Os_Status</td>	<td>Overall patient survival status.</td></tr>
+    <tr><td>Threegene</td>	<td>3-Gene classifier subtype</td></tr>
+    <tr><td>Vital_Status</td>	<td>The survival state of the person.</td></tr>
+    <tr><td>Radio_Therapy</td>	<td>Radio Therapy</td></tr>
+    <tr><td>Cancer_Type</td>	<td>Cancer Type</td></tr>
+    <tr><td>Cancer_Type_Detailed</td>	<td>Cancer Type Detailed</td></tr>
+    <tr><td>Er_Status</td>	<td>ER Status</td></tr>
+    <tr><td>Her2_Status</td>	<td>HER2 Status</td></tr>
+    <tr><td>Grade</td>	<td>Numeric value to express the degree of abnormality of cancer cells, a measure of differentiation and aggressiveness.</td></tr>
+    <tr><td>Oncotree_Code</td>	<td>Oncotree Code</td></tr>
+    <tr><td>Pr_Status</td>	<td>PR Status</td></tr>
+    <tr><td>Sample_Type</td>	<td>The type of sample (i.e., normal, primary, met, recurrence).</td></tr>
+    <tr><td>Tumor_Size</td>	<td>Tumor size.</td></tr>
+    <tr><td>Tumor_Stage</td>	<td>Tumor stage.</td></tr>
+    <tr><td>Tmb_Nonsynonymous</td>	<td>TMB (nonsynonymous)</td></tr>
+    <tr><td>FOXA1</td>	<td>FOXA1 Expression data</td></tr>
+    <tr><td>MLPH</td>	<td>MLPH Expression data</td></tr>
+    <tr><td>ESR1</td>	<td>ESR1 Expression data</td></tr>
+    <tr><td>ERBB2</td>	<td>ERBB2 Expression data</td></tr>
+    <tr><td>TP53</td>	<td>TP53 Expression data</td></tr>
+    <tr><td>PIK3CA</td>	<td>PIK3CA Expression data</td></tr>
+    <tr><td>GATA3</td>	<td>GATA3 Expression data</td></tr>
+    <tr><td>PGR</td>	<td>PGR Expression data</td></tr>
+  </tbody>
+</table>
+```
+
+
+Finally, we will conduct various statistical analyses and create visualizations to effectively interpret our data. 
+
+## Download the Data
+
+Follow [this link](https://cbioportal-datahub.s3.amazonaws.com/brca_metabric.tar.gz) to download the metabric dataset and copy the downloaded folder into the data folder in your working directory (i.e., IntroR folder).
+
+## Task 1: Patient and Sample Data
+
+**1. Import the clinical patient data file into a data frame named patient_info. If the import is successful, the expected output for the `head()` command would be as follows. **
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+patient_info <- read_tsv("data/brca_metabric/data_clinical_patient.txt", skip = 4)
+```
+
+```{r}
+#| classes: scrolling
+#| echo: false
+head(patient_info)
+```
+
+**2. Filter the `patient_info` dataframe to exclude data from a different study where patient ID starts with "MTS", keeping only the data where patient ID has the form "MB-xxxx". **
+
+*The expected output for dimensions of the data frame:*
+
+```{r}
+#| echo: false
+patient_info_filtered <- patient_info |> 
+  filter(str_detect(PATIENT_ID, '^MB-'))
+dim(patient_info_filtered)
+```
+
+**3. Remove all columns with indices 9, 10, 11, 19, 21, 22, 23, and 24 from the dataset, then organize the remaining data in ascending order based on patient IDs.**
+
+*The expected column names of the data frame:*
+
+```{r}
+#| echo: false
+#| message: false
+#| classes: scrolling
+patient_info_ordered <- patient_info_filtered |> 
+  select(-c(9,10,11,19,21,22,23,24)) |> 
+  arrange(PATIENT_ID) 
+colnames(patient_info_ordered)
+```
+
+**4. Convert the column names of the above dataframe to Snake_Case. **
+
+*The expected column names and the dimensions of the patient_info dataframe:*
+
+```{r}
+#| echo: false
+#| message: false
+#| classes: scrolling
+library(janitor)
+patient_info <- patient_info_ordered |> clean_names(case = "mixed")
+colnames(patient_info)
+dim(patient_info)
+```
+
+**5. Import the clinical sample data file into a data frame named sample_info and convert the column names to Snake_Case.** 
+
+*The expected output for the `head()` command:*
+
+```{r}
+#| echo: false
+#| classes: scrolling
+#| message: false
+sample_info <- read_tsv("data/brca_metabric/data_clinical_sample.txt", skip = 4) |> 
+  clean_names(case = "mixed")
+head(sample_info)
+```
+
+**6. Join the two data frames to create a data frame named patient_sample_data and remove columns that contain identical  values. **
+
+*The expected output for the `head()` command:*
+
+```{r}
+#| echo: false
+#| classes: scrolling
+patient_sample_data <- left_join(patient_info, sample_info, by = "Patient_Id") 
+patient_sample_data <- patient_sample_data |> select(-Sample_Id)
+head(patient_sample_data)
+```
+
+## Task 2: Expression data
+
+**1. Read the microarray data into data frame named mrna. Keep only the expression data for the specified genes: "ESR1", "ERBB2", "PGR", "TP53", "PIK3CA", "GATA3", "FOXA1", "MLPH".**
+
+```{r}
+#| echo: false
+#| classes: scrolling
+#| message: false
+mrna <- read_tsv("data/brca_metabric/data_mrna_illumina_microarray.txt") 
+mrna_filtered <- mrna |>  filter(Hugo_Symbol %in% c("ESR1", "ERBB2", "PGR", "TP53", "PIK3CA", "GATA3", "FOXA1", "MLPH")) 
+```
+
+**2. Remove columns from the other study, specifically those with sample IDs in the form "MTS-XXXX" and the Entrez ID column.**
+
+*The expected dimensions of the data frame:*
+
+```{r}
+#| echo: false
+mrna_filtered <- mrna_filtered |> select(1, starts_with("MB-"))
+dim(mrna_filtered)
+```
+
+
+**3. To facilitate the join of patient_sample_data and the above data frame in the next task, transform the above data frame to the following format. **
+
+*The top 6 rows of the resulting data frame:*
+
+```{r}
+#| echo: false
+#| classes: scrolling
+mrna_long_form <- mrna_filtered |> pivot_longer(
+  cols = starts_with("MB-"), 
+  names_to = "Patient_Id",
+  values_to = "Expression_Data")
+
+mrna_final <- mrna_long_form |> pivot_wider(names_from = Hugo_Symbol, values_from = Expression_Data)
+head(mrna_final)
+```
+
+**4. Join the above data frame and the data frame patient_sample_data created in Task 2 to create  clinical_and_expression_data dataframe. **
+
+*The top 6 rows, column names and the dimensions of the final data frame:*
+
+```{r}
+#| echo: false
+#| classes: scrolling
+clinical_and_expression_data <- left_join(patient_sample_data, mrna_final, by = "Patient_Id")
+head(clinical_and_expression_data)
+```
+
+
+```{r}
+#| echo: false
+#| classes: scrolling
+colnames(clinical_and_expression_data)
+dim(clinical_and_expression_data)
+```
+
+**5. Notice that one of the columns contains key value pairs in the form key:value. For example: 0:LIVING, 1:DECEASED. Update column to retain only the values. **
+
+```{r}
+
+```
+
+**6. Rename the data frame to metabric for all subsequent analysis. **
+
+```{r}
+
+```
+
+## Task 3: Basic Analysis
+
+**1. Find the total number of patients who were still alive at the time of the study and had survived for more than 10 years (120 months).**
+
+```{r}
+
+```
+
+**2. Display only the columns of interest in the decreasing order of overall survivival time.**
+
+```{r}
+
+```
+
+**3. How many samples in the METABRIC dataset have high cellularity but have no recorded classification with the 3-gene classifier?**
+
+```{r}
+
+```
+
+**4. Round all columns containing expression data to two decimal places and display only the relevant columns alongside the patient IDs. **
+
+*Hint: see help page of `mutate_at()`.* 
+
+```{r}
+
+```
+
+## Task 4: Nottingham Prognostic Index
+
+**1. Create a new column for corrected NPI using the following equation (try to do it yourself for practice). **
+
+ $\text{NPI} = (0.2 \times \text{Tumor size in centimetres}) + \text{Node status} + \text{Tumour grade}$
+
+- $\text{Node status}$: 
+    - 0 Lymph_Nodes_Examined_Positive $\Rightarrow$ Node status = 1
+    - 1-3 Lymph_Nodes_Examined_Positive $\Rightarrow$ Node status = 2
+    - $>3$ Lymph_Nodes_Examined_Positive $\Rightarrow$ Node status = 3
+- $\text{Tumor grade}$: 
+    - Grade I $\Rightarrow$ 1
+    - Grade II $\Rightarrow$ 2
+    - Grade III $\Rightarrow$ 3
+
+```{r}
+
+```
+
+**2. Round both NPI computations to two decimal places and display the results in decreasing order of the newly calculated NPI column.** 
+
+The `round()` function is  useful for rounding numerical values to a specified number of decimal places.
+
+```{r}
+
+```
+
+
+**3. Visualize both NPI compuations against age at diagnosis in the same plot to facilitate comparison.**
+
+```{r}
+
+```
+
+
+## Task 5: Expression Z-Scores
+
+Some genes are generally expressed at higher levels than others. This can make comparisons of changes between groups for a set of genes somewhat difficult, particularly if the expression for those genes are on very different scales. The expression values in our METABRIC are on a log2 scale which helps to reduce the range of values but another method for representing expression measurements is to standardize these to produce z-scores.
+
+Standardization of a set of measurements involves subtracting the mean from each and dividing by the standard deviation. This will produce values with a mean of 0 and a standard deviation of 1.
+
+**1. Create a modified version of the metabric data frame containing a new column with the standardized expression values (z-scores) for the ERBB2 gene.**
+
+```{r}
+
+```
+
+**2. Verify the computation by calculating the mean and standard deviation of the new z-score variable.**
+
+```{r}
+
+```
+
+**3. Add another column to the modified metabric data frame containing a z-score for GATA3 and then create a scatter plot of the z-scores of GATA3 against ERBB2. Modify the plot to facet by the PAM50 classification.**
+
+```{r}
+
+```
+
+**4. Standardize the expression values for all genes in a single operation using an anonymous function, overwriting their original values, and round the resulting values to 3 significant figures.**
+
+*Hine: refer `mutate_at()`*
+
+```{r}
+
+```
+
+**5. Verify the computation by calculating the mean and standard deviation for each column.**
+
+*Hint: check `summarise_at()`*
+
+```{r}
+
+```
+
+**6. Create a plot comparing the distribution of standardized expression values for TP53 against a normal distribution.**
+
+*Hint: use `stat_function()`*
+
+```{r}
+
+```
+
+
+## Task 6: PIK3CA Mutations across Integrative Clusters
+
+[Figure 5a](https://pubmed.ncbi.nlm.nih.gov/27161491/#&gid=article-figures&pid=figure-5-uid-4) from the METABRIC 2016 paper compares the percentage of samples that have non-silent mutations for various genes within each of the Integrative Clusters. In this exercise, we’ll reproduce a version of one of these bar charts for the PIK3CA gene.
+
+**1. Read the mutations that were detected in each patient tumour sample and exclude data from a different study where patient ID starts with "MTS", keeping only the data where patient ID has the form "MB-xxxx".**
+
+```{r}
+
+```
+
+**2. Use the following list to arrange and select the desdired columns for subsequent analysis.***
+
+`Patient_Id = Tumor_Sample_Barcode, Chromosome, Start_Position, End_Position, Strand, Reference_Allele, contains("Tumor_Seq"), starts_with("Variant"), Codon = Protein_position, Gene = Hugo_Symbol, starts_with("HGVS")`
+
+```{r}
+
+```
+
+
+**3. Find the most frequently mutated codons in TP53.**
+
+These frequently mutated loci are known as *hotspots*.
+
+```{r}
+
+```
+
+**4. What type of mutations are found at the most prevalent hotspot in TP53, codon 248? What changes are occurring at the DNA and protein level?**
+
+```{r}
+
+```
+
+**5. Create a data frame containing the number of non-silent PIK3CA mutations in each patient sample. It should have two columns, Patient_ID and PIK3CA_mutation_count.**
+
+```{r}
+
+```
+
+**6. Join the above table and the metabric data frame to include PIK3CA mutations**
+
+```{r}
+
+```
+
+**7. Create a new column named Has_PIK3CA_mutation containing logical values (i.e., TRUE or FALSE).**
+
+*Hint: use `is.na()` function*
+
+```{r}
+
+```
+
+**8. Compute the proportion of patient samples within each Integrative Cluster with a PIK3CA mutation. Exclude those samples that have not been sequenced and those that have not been classified into one of the Integrative Cluster subtypes.**
+
+```{r}
+
+```
+
+**9. Plot the above percentages as a bar chart.**
+
+*Hint: Look at the help page for `geom_bar` and `geom_col` to see which function to use.*
+
+```{r}
+
+```
+
+
+**10. Customize your plot in the following ways:**
+
+- add a title
+- change the axis labels so they don’t contain underscores
+- hide legend
+- set the limits on the y axis so that the entire 0 - 100% range is displayed
+- set breaks on the y axis to be at 20% intervals
+- reduce the amount of space between the bottom of the bars and the tick marks for each integrative cluster
+- apply the Viridis colour scheme for the bars (`scale_colour_viridis_d`)
+- choose the black and white theme by appending `+ theme_bw()` to the plot
+- remove the vertical grid lines by appending `+ theme(panel.grid.major.x = element_blank())`
+
+**Compare the plot with the equivalent plot in [Figure 5a](https://pubmed.ncbi.nlm.nih.gov/27161491/#&gid=article-figures&pid=figure-5-uid-4) from the metabric mutation paper. **
+
+```{r}
+
+```
+
+**11. Create a similar plot for GATA3 and TP53 and compare those given in [Figure 5a](https://pubmed.ncbi.nlm.nih.gov/27161491/#&gid=article-figures&pid=figure-5-uid-4) from the metabric mutation paper**
+
+**12. Save each plot as a PDF using `ggsave()`**
+
+## Task 7: Relate Copy Number and Expression Data
+
+**1. Read the copy number data into a data frame named copy_number_states. Remove columns from the other study, specifically those with sample IDs in the form "MTS-XXXX" and the Entrez ID column. Keep only the expression data for the specified genes: "ESR1", "ERBB2", "PGR", "TP53", "PIK3CA", "GATA3", "FOXA1", "MLPH". **
+
+```{r}
+
+```
+
+**2. Convert it into a tidy format with a row-per-sample-per-gene where the values are the copy number states.**
+
+```{r}
+
+```
+
+**3. Remove the `Entrez_Gene_id` column and convert the copy number state variable into a factor using the following names for each state.**
+
+- -2 deletion
+- -1 loss
+- 0 neutral
+- 1 gain
+- 2 amplification
+
+```{r}
+
+```
+
+**4. Count the total number of occurrences of each copy number state.**
+
+```{r}
+
+```
+
+**5. Create a combined data set containing the expression value and copy number state for each patient and gene pairing. The data frame should contain the columns: `Sample`, `Gene`, `Expression_Date` and `Copy_Number_State`.**
+
+```{r}
+
+```
+
+**6. Create a series of box plots for each of the genes with a box-and-whiskers showing the range of expression values for each copy number state.**
+
+```{r}
+
+```
+
+**7. Customize this plot by changing the labels, scales, colours and theme as you like – be creative! Save the plot as a PDF using `ggsave()`**
+
+```{r}
+
+```
+
+
+
+
+
+
+
+

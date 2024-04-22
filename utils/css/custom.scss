@@ -37,4 +37,22 @@ h5 {
 }
 
 
+table {
+  font-size: 9pt;
+}
+
+table.no-spacing {
+  border-spacing:0; /* Removes the cell spacing via CSS */
+  border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
+}
+
+table.no-spacing tbody { 
+  height: 500px; 
+  overflow-y: auto; 
+  display: block; 
+}
+
+table.no-spacing thead { 
+  display: block; 
+}
 

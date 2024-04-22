@@ -18,6 +18,8 @@ website:
           href: vignettes/3_Data_Manipulation.html  
         - text: "Visualizing Data"
           href: vignettes/4_Visualization.html
+        - text: "Exploring the Metabric Dataset"
+          href: vignettes/5_Exploring_Metabric.html    
 format:
   html:
     theme: 
