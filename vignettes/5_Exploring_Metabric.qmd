@@ -41,7 +41,7 @@ The following table illustartes the column names and descriptions of the metabri
     <tr><td>Oncotree_Code</td>	<td>Oncotree Code</td></tr>
     <tr><td>Pr_Status</td>	<td>PR Status</td></tr>
     <tr><td>Sample_Type</td>	<td>The type of sample (i.e., normal, primary, met, recurrence).</td></tr>
-    <tr><td>Tumor_Size</td>	<td>Tumor size.</td></tr>
+    <tr><td>Tumor_Size</td>	<td>Tumor size in mm.</td></tr>
     <tr><td>Tumor_Stage</td>	<td>Tumor stage.</td></tr>
     <tr><td>Tmb_Nonsynonymous</td>	<td>TMB (nonsynonymous)</td></tr>
     <tr><td>FOXA1</td>	<td>FOXA1 Expression data</td></tr>
