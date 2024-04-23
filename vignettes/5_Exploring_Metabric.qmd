@@ -329,13 +329,13 @@ Standardization of a set of measurements involves subtracting the mean from each
 
 [Figure 5a](https://pubmed.ncbi.nlm.nih.gov/27161491/#&gid=article-figures&pid=figure-5-uid-4) from the METABRIC 2016 paper compares the percentage of samples that have non-silent mutations for various genes within each of the Integrative Clusters. In this exercise, we’ll reproduce a version of one of these bar charts for the PIK3CA gene.
 
-**1. Read the mutations that were detected in each patient tumour sample and exclude data from a different study where patient ID starts with "MTS", keeping only the data where patient ID has the form "MB-xxxx".**
+**1. Read the mutations that were detected in each patient tumour sample and exclude data from a different study where sample barcode starts with "MTS", keeping only the data where barcode has the form "MB-xxxx".**
 
 ```{r}
 
 ```
 
-**2. Use the following list to arrange and select the desdired columns for subsequent analysis.***
+**2. Use the following list to arrange and select the desdired columns for subsequent analysis.**
 
 `Patient_Id = Tumor_Sample_Barcode, Chromosome, Start_Position, End_Position, Strand, Reference_Allele, contains("Tumor_Seq"), starts_with("Variant"), Codon = Protein_position, Gene = Hugo_Symbol, starts_with("HGVS")`
 
@@ -378,7 +378,7 @@ These frequently mutated loci are known as *hotspots*.
 
 ```
 
-**8. Compute the proportion of patient samples within each Integrative Cluster with a PIK3CA mutation. Exclude those samples that have not been sequenced and those that have not been classified into one of the Integrative Cluster subtypes.**
+**8. Compute the proportion of patient samples within each Integrative Cluster with a PIK3CA mutation. Exclude those that have not been classified into one of the Integrative Cluster subtypes.**
 
 ```{r}
 
@@ -396,12 +396,12 @@ These frequently mutated loci are known as *hotspots*.
 **10. Customize your plot in the following ways:**
 
 - add a title
-- change the axis labels so they don’t contain underscores
 - hide legend
+- change the axis labels so they don’t contain underscores
 - set the limits on the y axis so that the entire 0 - 100% range is displayed
-- set breaks on the y axis to be at 20% intervals
-- reduce the amount of space between the bottom of the bars and the tick marks for each integrative cluster
-- apply the Viridis colour scheme for the bars (`scale_colour_viridis_d`)
+- set breaks on the x axis to be at 20% intervals
+- reduce the amount of space between the bars and the tick marks for each integrative cluster
+- apply the Viridis colour scheme for the bars (`scale_fill_viridis_d`)
 - choose the black and white theme by appending `+ theme_bw()` to the plot
 - remove the vertical grid lines by appending `+ theme(panel.grid.major.x = element_blank())`
 
