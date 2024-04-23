@@ -30,6 +30,7 @@ The following table illustartes the column names and descriptions of the metabri
     <tr><td>Age_At_Diagnosis</td>	<td>Age at Diagnosis</td></tr>
     <tr><td>Os_Months</td>	<td>Overall survival in months since initial diagonosis.</td></tr>
     <tr><td>Os_Status</td>	<td>Overall patient survival status.</td></tr>
+    <tr><td>Claudin_Subtype</td>	<td>Pam50 + Claudin-low subtype.</td></tr>
     <tr><td>Threegene</td>	<td>3-Gene classifier subtype</td></tr>
     <tr><td>Vital_Status</td>	<td>The survival state of the person.</td></tr>
     <tr><td>Radio_Therapy</td>	<td>Radio Therapy</td></tr>
@@ -236,7 +237,7 @@ dim(clinical_and_expression_data)
 
 **4. Round all columns containing expression data to two decimal places and display only the relevant columns alongside the patient IDs. **
 
-*Hint: see help page of `mutate_at()`.* 
+*Hint: see help page of `mutate_at()`. The `round()` function is  useful for rounding numerical values to a specified number of decimal places.* 
 
 ```{r}
 
@@ -262,8 +263,6 @@ dim(clinical_and_expression_data)
 ```
 
 **2. Round both NPI computations to two decimal places and display the results in decreasing order of the newly calculated NPI column.** 
-
-The `round()` function is  useful for rounding numerical values to a specified number of decimal places.
 
 ```{r}
 
@@ -295,7 +294,7 @@ Standardization of a set of measurements involves subtracting the mean from each
 
 ```
 
-**3. Add another column to the modified metabric data frame containing a z-score for GATA3 and then create a scatter plot of the z-scores of GATA3 against ERBB2. Modify the plot to facet by the PAM50 classification.**
+**3. Add another column to the modified metabric data frame containing a z-score for GATA3 and then create a scatter plot of the z-scores of GATA3 against ERBB2. Modify the plot to facet by the Claudin_Subtype classification.**
 
 ```{r}
 
@@ -303,7 +302,7 @@ Standardization of a set of measurements involves subtracting the mean from each
 
 **4. Standardize the expression values for all genes in a single operation using an anonymous function, overwriting their original values, and round the resulting values to 3 significant figures.**
 
-*Hine: refer `mutate_at()`*
+*Hint: refer `mutate_at()`*
 
 ```{r}
 
