@@ -4981,90 +4981,94 @@ margin-bottom: 10px;
 <td>Overall patient survival status.</td>
 </tr>
 <tr class="odd">
+<td>Claudin_Subtype</td>
+<td>Pam50 + Claudin-low subtype.</td>
+</tr>
+<tr class="even">
 <td>Threegene</td>
 <td>3-Gene classifier subtype</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Vital_Status</td>
 <td>The survival state of the person.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Radio_Therapy</td>
 <td>Radio Therapy</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Cancer_Type</td>
 <td>Cancer Type</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Cancer_Type_Detailed</td>
 <td>Cancer Type Detailed</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Er_Status</td>
 <td>ER Status</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Her2_Status</td>
 <td>HER2 Status</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Grade</td>
 <td>Numeric value to express the degree of abnormality of cancer cells, a measure of differentiation and aggressiveness.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Oncotree_Code</td>
 <td>Oncotree Code</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Pr_Status</td>
 <td>PR Status</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Sample_Type</td>
 <td>The type of sample (i.e., normal, primary, met, recurrence).</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Tumor_Size</td>
 <td>Tumor size in mm.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Tumor_Stage</td>
 <td>Tumor stage.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Tmb_Nonsynonymous</td>
 <td>TMB (nonsynonymous)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>FOXA1</td>
 <td>FOXA1 Expression data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>MLPH</td>
 <td>MLPH Expression data</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>ESR1</td>
 <td>ESR1 Expression data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>ERBB2</td>
 <td>ERBB2 Expression data</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>TP53</td>
 <td>TP53 Expression data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>PIK3CA</td>
 <td>PIK3CA Expression data</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>GATA3</td>
 <td>GATA3 Expression data</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>PGR</td>
 <td>PGR Expression data</td>
 </tr>
@@ -6177,7 +6181,7 @@ margin-bottom: 10px;
 <p><strong>2. Display only the columns of interest in the decreasing order of overall survivival time.</strong></p>
 <p><strong>3. How many samples in the METABRIC dataset have high cellularity but have no recorded classification with the 3-gene classifier?</strong></p>
 <p><strong>4. Round all columns containing expression data to two decimal places and display only the relevant columns alongside the patient IDs. </strong></p>
-<p><em>Hint: see help page of <code>mutate_at()</code>.</em></p>
+<p><em>Hint: see help page of <code>mutate_at()</code>. The <code>round()</code> function is useful for rounding numerical values to a specified number of decimal places.</em></p>
 </section>
 <section id="task-4-nottingham-prognostic-index" class="level2">
 <h2 class="anchored" data-anchor-id="task-4-nottingham-prognostic-index">Task 4: Nottingham Prognostic Index</h2>
@@ -6198,7 +6202,6 @@ margin-bottom: 10px;
 </ul></li>
 </ul>
 <p><strong>2. Round both NPI computations to two decimal places and display the results in decreasing order of the newly calculated NPI column.</strong></p>
-<p>The <code>round()</code> function is useful for rounding numerical values to a specified number of decimal places.</p>
 <p><strong>3. Visualize both NPI compuations against age at diagnosis in the same plot to facilitate comparison.</strong></p>
 </section>
 <section id="task-5-expression-z-scores" class="level2">
@@ -6207,9 +6210,9 @@ margin-bottom: 10px;
 <p>Standardization of a set of measurements involves subtracting the mean from each and dividing by the standard deviation. This will produce values with a mean of 0 and a standard deviation of 1.</p>
 <p><strong>1. Create a modified version of the metabric data frame containing a new column with the standardized expression values (z-scores) for the ERBB2 gene.</strong></p>
 <p><strong>2. Verify the computation by calculating the mean and standard deviation of the new z-score variable.</strong></p>
-<p><strong>3. Add another column to the modified metabric data frame containing a z-score for GATA3 and then create a scatter plot of the z-scores of GATA3 against ERBB2. Modify the plot to facet by the PAM50 classification.</strong></p>
+<p><strong>3. Add another column to the modified metabric data frame containing a z-score for GATA3 and then create a scatter plot of the z-scores of GATA3 against ERBB2. Modify the plot to facet by the Claudin_Subtype classification.</strong></p>
 <p><strong>4. Standardize the expression values for all genes in a single operation using an anonymous function, overwriting their original values, and round the resulting values to 3 significant figures.</strong></p>
-<p><em>Hine: refer <code>mutate_at()</code></em></p>
+<p><em>Hint: refer <code>mutate_at()</code></em></p>
 <p><strong>5. Verify the computation by calculating the mean and standard deviation for each column.</strong></p>
 <p><em>Hint: check <code>summarise_at()</code></em></p>
 <p><strong>6. Create a plot comparing the distribution of standardized expression values for TP53 against a normal distribution.</strong></p>
