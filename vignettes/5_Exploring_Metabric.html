@@ -6221,8 +6221,8 @@ margin-bottom: 10px;
 <section id="task-6-pik3ca-mutations-across-integrative-clusters" class="level2">
 <h2 class="anchored" data-anchor-id="task-6-pik3ca-mutations-across-integrative-clusters">Task 6: PIK3CA Mutations across Integrative Clusters</h2>
 <p><a href="https://pubmed.ncbi.nlm.nih.gov/27161491/#&amp;gid=article-figures&amp;pid=figure-5-uid-4">Figure 5a</a> from the METABRIC 2016 paper compares the percentage of samples that have non-silent mutations for various genes within each of the Integrative Clusters. In this exercise, we’ll reproduce a version of one of these bar charts for the PIK3CA gene.</p>
-<p><strong>1. Read the mutations that were detected in each patient tumour sample and exclude data from a different study where patient ID starts with “MTS”, keeping only the data where patient ID has the form “MB-xxxx”.</strong></p>
-<p><strong>2. Use the following list to arrange and select the desdired columns for subsequent analysis.</strong>*</p>
+<p><strong>1. Read the mutations that were detected in each patient tumour sample and exclude data from a different study where sample barcode starts with “MTS”, keeping only the data where barcode has the form “MB-xxxx”.</strong></p>
+<p><strong>2. Use the following list to arrange and select the desdired columns for subsequent analysis.</strong></p>
 <p><code>Patient_Id = Tumor_Sample_Barcode, Chromosome, Start_Position, End_Position, Strand, Reference_Allele, contains(&quot;Tumor_Seq&quot;), starts_with(&quot;Variant&quot;), Codon = Protein_position, Gene = Hugo_Symbol, starts_with(&quot;HGVS&quot;)</code></p>
 <p><strong>3. Find the most frequently mutated codons in TP53.</strong></p>
 <p>These frequently mutated loci are known as <em>hotspots</em>.</p>
@@ -6231,18 +6231,18 @@ margin-bottom: 10px;
 <p><strong>6. Join the above table and the metabric data frame to include PIK3CA mutations</strong></p>
 <p><strong>7. Create a new column named Has_PIK3CA_mutation containing logical values (i.e., TRUE or FALSE).</strong></p>
 <p><em>Hint: use <code>is.na()</code> function</em></p>
-<p><strong>8. Compute the proportion of patient samples within each Integrative Cluster with a PIK3CA mutation. Exclude those samples that have not been sequenced and those that have not been classified into one of the Integrative Cluster subtypes.</strong></p>
+<p><strong>8. Compute the proportion of patient samples within each Integrative Cluster with a PIK3CA mutation. Exclude those that have not been classified into one of the Integrative Cluster subtypes.</strong></p>
 <p><strong>9. Plot the above percentages as a bar chart.</strong></p>
 <p><em>Hint: Look at the help page for <code>geom_bar</code> and <code>geom_col</code> to see which function to use.</em></p>
 <p><strong>10. Customize your plot in the following ways:</strong></p>
 <ul>
 <li>add a title</li>
-<li>change the axis labels so they don’t contain underscores</li>
 <li>hide legend</li>
+<li>change the axis labels so they don’t contain underscores</li>
 <li>set the limits on the y axis so that the entire 0 - 100% range is displayed</li>
-<li>set breaks on the y axis to be at 20% intervals</li>
-<li>reduce the amount of space between the bottom of the bars and the tick marks for each integrative cluster</li>
-<li>apply the Viridis colour scheme for the bars (<code>scale_colour_viridis_d</code>)</li>
+<li>set breaks on the x axis to be at 20% intervals</li>
+<li>reduce the amount of space between the bars and the tick marks for each integrative cluster</li>
+<li>apply the Viridis colour scheme for the bars (<code>scale_fill_viridis_d</code>)</li>
 <li>choose the black and white theme by appending <code>+ theme_bw()</code> to the plot</li>
 <li>remove the vertical grid lines by appending <code>+ theme(panel.grid.major.x = element_blank())</code></li>
 </ul>
