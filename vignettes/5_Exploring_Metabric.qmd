@@ -6,7 +6,7 @@ This week's session is structured as a tutorial, allowing you to actively engage
 
 We will be utilizing the metabric dataset, which should now be somewhat familiar to everyone. Our workflow will involve downloading the original data from cBioPortal, reading it into our R session, and then proceeding to preprocess and transform the data to better suit our analytical needs. This results in a data frame named metabric.
 
-The following table illustartes the column names and descriptions of the metabric data frame we will be using for subsequent analysis. 
+The following table illustrates the column names and descriptions of the metabric data frame we will be using for subsequent analysis. 
 
 ```{=html}
 <table class="no-spacing" cellspacing="0" >
